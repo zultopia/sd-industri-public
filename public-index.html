@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SD Industri Bandung — Sekolah Dasar Negeri Cicendo</title>
+  <meta name="description" content="SD Industri Bandung, Jl. Industri Dalam No. 2, Kec. Cicendo. Sekolah berkualitas dengan akreditasi B di kota Bandung."/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:  #1B5E20;
+      --green:       #2E7D32;
+      --green-mid:   #388E3C;
+      --green-light: #4CAF50;
+      --green-pale:  #E8F5E9;
+      --green-100:   #C8E6C9;
+      --gold:        #F9A825;
+      --gold-light:  #FFF8E1;
+      --text:        #1C1C1C;
+      --text-muted:  #6B6B6B;
+      --border:      #E0E0E0;
+      --bg:          #F7F8F5;
+      --white:       #FFFFFF;
+      --radius:      12px;
+      --shadow-sm:   0 2px 8px rgba(0,0,0,0.07);
+      --shadow-md:   0 6px 24px rgba(0,0,0,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.65; }
+
+    /* ── TOPBAR ── */
+    .topbar { background: var(--green-dark); color: rgba(255,255,255,0.8); font-size: 12px; padding: 7px 0; }
+    .topbar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+    .topbar span { display: flex; align-items: center; gap: 5px; }
+
+    /* ── NAVBAR ── */
+    nav { background: var(--white); box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 200; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-brand .brand-icon { width: 44px; height: 44px; background: var(--green-pale); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+    .nav-brand .brand-text strong { display: block; font-size: 16px; font-weight: 700; color: var(--green-dark); }
+    .nav-brand .brand-text span { font-size: 11px; color: var(--text-muted); }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a { padding: 8px 14px; border-radius: 8px; text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; transition: all 0.15s; }
+    .nav-links a:hover, .nav-links a.active { background: var(--green-pale); color: var(--green); }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; font-size: 22px; }
+    .nav-mobile { display: none; background: var(--white); border-top: 1px solid var(--border); padding: 12px 0; }
+    .nav-mobile a { display: block; padding: 10px 20px; color: var(--text); text-decoration: none; font-size: 15px; }
+    .nav-mobile a:hover { background: var(--green-pale); color: var(--green); }
+    .nav-mobile.open { display: block; }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    section { padding: 72px 0; }
+    .section-label { display: inline-block; background: var(--green-pale); color: var(--green); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+    .section-title { font-size: 30px; font-weight: 800; line-height: 1.25; margin-bottom: 10px; }
+    .section-sub { color: var(--text-muted); font-size: 16px; max-width: 560px; }
+    .section-head { margin-bottom: 44px; }
+
+    /* ── HERO ── */
+    .hero { background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 60%, #1B5E20 100%); color: white; padding: 80px 0 90px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+    .hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 20px; }
+    .hero h1 { font-size: 42px; font-weight: 900; line-height: 1.15; margin-bottom: 16px; }
+    .hero h1 span { color: var(--gold); }
+    .hero p { font-size: 17px; color: rgba(255,255,255,0.82); margin-bottom: 32px; max-width: 440px; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-hero-primary { background: var(--gold); color: var(--green-dark); padding: 13px 28px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 15px; transition: all 0.15s; }
+    .btn-hero-primary:hover { background: #FFD54F; transform: translateY(-1px); }
+    .btn-hero-outline { border: 2px solid rgba(255,255,255,0.4); color: white; padding: 12px 24px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 15px; transition: all 0.15s; }
+    .btn-hero-outline:hover { background: rgba(255,255,255,0.08); }
+    .hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .hero-stat { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); padding: 22px; text-align: center; }
+    .hero-stat .val { font-size: 36px; font-weight: 900; color: var(--gold); }
+    .hero-stat .lbl { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 4px; }
+
+    /* ── STRIP ── */
+    .strip { background: var(--gold); padding: 18px 0; }
+    .strip-inner { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; }
+    .strip-item { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--green-dark); }
+
+    /* ── BERITA ── */
+    #berita { background: var(--white); }
+    .berita-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .berita-card { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: all 0.2s; background: var(--white); }
+    .berita-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .berita-img { height: 160px; background: var(--green-pale); display: flex; align-items: center; justify-content: center; font-size: 40px; overflow: hidden; }
+    .berita-img img { width: 100%; height: 100%; object-fit: cover; }
+    .berita-body { padding: 18px; }
+    .berita-tag { display: inline-block; background: var(--green-pale); color: var(--green); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+    .berita-title { font-size: 15px; font-weight: 700; line-height: 1.4; margin-bottom: 6px; color: var(--text); }
+    .berita-date { font-size: 12px; color: var(--text-muted); }
+    .berita-isi { font-size: 13px; color: var(--text-muted); margin-top: 8px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .loading-placeholder { grid-column: 1/-1; text-align: center; padding: 48px; color: var(--text-muted); font-size: 14px; }
+
+    /* ── AGENDA ── */
+    #agenda { background: var(--bg); }
+    .agenda-list { display: flex; flex-direction: column; gap: 14px; }
+    .agenda-item { background: var(--white); border-radius: var(--radius); padding: 18px 22px; display: flex; align-items: flex-start; gap: 18px; border-left: 4px solid var(--green-light); box-shadow: var(--shadow-sm); transition: box-shadow 0.2s; }
+    .agenda-item:hover { box-shadow: var(--shadow-md); }
+    .agenda-date { background: var(--green-pale); border-radius: 10px; padding: 10px 14px; text-align: center; min-width: 58px; }
+    .agenda-date .day { font-size: 22px; font-weight: 800; color: var(--green); line-height: 1; }
+    .agenda-date .month { font-size: 11px; color: var(--green); font-weight: 600; text-transform: uppercase; margin-top: 2px; }
+    .agenda-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .agenda-info p { font-size: 13px; color: var(--text-muted); }
+    .agenda-info .agenda-loc { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+    /* ── GURU ── */
+    #guru { background: var(--white); }
+    .guru-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+    .guru-card { text-align: center; padding: 28px 16px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--white); transition: all 0.2s; }
+    .guru-card:hover { border-color: var(--green-100); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .guru-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--green-pale); display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 14px; overflow: hidden; border: 3px solid var(--green-100); }
+    .guru-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .guru-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .guru-jabatan { font-size: 12px; color: var(--green); font-weight: 600; background: var(--green-pale); padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 6px; }
+    .guru-mapel { font-size: 12px; color: var(--text-muted); }
+
+    /* ── PROFIL ── */
+    #profil { background: var(--bg); }
+    .profil-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .profil-info h2 { font-size: 28px; font-weight: 800; margin-bottom: 16px; }
+    .profil-info p { color: var(--text-muted); margin-bottom: 20px; line-height: 1.75; }
+    .info-table { width: 100%; border-collapse: collapse; }
+    .info-table tr { border-bottom: 1px solid var(--border); }
+    .info-table tr:last-child { border-bottom: none; }
+    .info-table td { padding: 10px 0; font-size: 14px; }
+    .info-table td:first-child { color: var(--text-muted); width: 40%; font-weight: 500; }
+    .info-table td:last-child { font-weight: 600; }
+    .profil-visi { background: var(--white); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-sm); }
+    .profil-visi h3 { font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 10px; padding-bottom: 10px; border-bottom: 2px solid var(--green-pale); }
+    .profil-visi p { font-size: 14px; color: var(--text-muted); line-height: 1.75; margin-bottom: 20px; }
+    .profil-visi ul { padding-left: 18px; }
+    .profil-visi ul li { font-size: 14px; color: var(--text-muted); margin-bottom: 6px; }
+
+    /* ── GALERI ── */
+    #galeri { background: var(--white); }
+    .galeri-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .galeri-item { border-radius: 10px; overflow: hidden; aspect-ratio: 1; background: var(--green-pale); display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; transition: transform 0.2s; position: relative; }
+    .galeri-item:hover { transform: scale(1.03); }
+    .galeri-item img { width: 100%; height: 100%; object-fit: cover; }
+    .galeri-item .galeri-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.45); opacity: 0; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 600; text-align: center; padding: 8px; }
+    .galeri-item:hover .galeri-overlay { opacity: 1; }
+
+    /* ── KONTAK ── */
+    #kontak { background: var(--green-dark); color: white; }
+    #kontak .section-label { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); }
+    #kontak .section-title { color: white; }
+    .kontak-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .kontak-detail { display: flex; flex-direction: column; gap: 18px; }
+    .kontak-item { display: flex; gap: 14px; align-items: flex-start; }
+    .kontak-icon { width: 42px; height: 42px; background: rgba(255,255,255,0.10); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .kontak-text strong { display: block; font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 3px; }
+    .kontak-text span { font-size: 15px; color: white; }
+    .kontak-map { border-radius: var(--radius); overflow: hidden; height: 300px; background: rgba(255,255,255,0.08); }
+    .kontak-map iframe { width: 100%; height: 100%; border: none; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--green-dark); border-top: 1px solid rgba(255,255,255,0.08); padding: 24px 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-inner p { font-size: 13px; color: rgba(255,255,255,0.5); }
+    .footer-inner a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; }
+    .footer-inner a:hover { color: rgba(255,255,255,0.8); }
+
+    /* ── EMPTY / LOADING ── */
+    .data-empty { text-align: center; padding: 52px 20px; color: var(--text-muted); }
+    .data-empty .icon { font-size: 36px; margin-bottom: 10px; }
+    .spinner { width: 28px; height: 28px; border: 3px solid var(--green-100); border-top-color: var(--green); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 10px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: repeat(4, 1fr); }
+      .berita-grid { grid-template-columns: repeat(2, 1fr); }
+      .guru-grid { grid-template-columns: repeat(2, 1fr); }
+      .galeri-grid { grid-template-columns: repeat(3, 1fr); }
+      .profil-grid, .kontak-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+    }
+    @media (max-width: 560px) {
+      .hero h1 { font-size: 30px; }
+      .berita-grid { grid-template-columns: 1fr; }
+      .guru-grid { grid-template-columns: repeat(2, 1fr); }
+      .galeri-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
+      .section-title { font-size: 24px; }
+      .strip-inner { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="container">
+    <span>📍 Jl. Industri Dalam No. 2, Kec. Cicendo, Bandung</span>
+    <span>📞 (022) 6120020</span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <div class="brand-icon">🏫</div>
+        <div class="brand-text">
+          <strong>SD Industri</strong>
+          <span>NPSN 20219595 · Bandung</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="#berita" class="active">Berita</a>
+        <a href="#agenda">Agenda</a>
+        <a href="#guru">Guru</a>
+        <a href="#galeri">Galeri</a>
+        <a href="#profil">Profil</a>
+        <a href="#kontak">Kontak</a>
+      </div>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+      <a href="#berita" onclick="toggleMenu()">Berita</a>
+      <a href="#agenda" onclick="toggleMenu()">Agenda</a>
+      <a href="#guru" onclick="toggleMenu()">Guru</a>
+      <a href="#galeri" onclick="toggleMenu()">Galeri</a>
+      <a href="#profil" onclick="toggleMenu()">Profil</a>
+      <a href="#kontak" onclick="toggleMenu()">Kontak</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">🏆 Akreditasi B · Kota Bandung</div>
+        <h1>Sekolah Dasar <span>Industri</span> Bandung</h1>
+        <p>Mendidik generasi unggul dengan semangat belajar, karakter kuat, dan nilai budaya bangsa di tengah kota Bandung.</p>
+        <div class="hero-btns">
+          <a href="#profil" class="btn-hero-primary">Tentang Sekolah</a>
+          <a href="#kontak" class="btn-hero-outline">Hubungi Kami</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="val">97</div><div class="lbl">Siswa Aktif</div></div>
+        <div class="hero-stat"><div class="val">6</div><div class="lbl">Rombel / Kelas</div></div>
+        <div class="hero-stat"><div class="val">3</div><div class="lbl">Guru Berdedikasi</div></div>
+        <div class="hero-stat"><div class="val">B</div><div class="lbl">Akreditasi</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="container">
+    <div class="strip-inner">
+      <div class="strip-item">✅ Double Shift / 6 Hari</div>
+      <div class="strip-item">✅ Partisipasi BOS</div>
+      <div class="strip-item">✅ 6 Tingkat Kelas</div>
+      <div class="strip-item">✅ Kec. Cicendo, Bandung</div>
+    </div>
+  </div>
+</div>
+
+<!-- BERITA -->
+<section id="berita">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Berita & Pengumuman</div>
+      <h2 class="section-title">Kabar Terbaru Sekolah</h2>
+      <p class="section-sub">Informasi terkini kegiatan, prestasi, dan pengumuman dari SD Industri Bandung.</p>
+    </div>
+    <div class="berita-grid" id="berita-container">
+      <div class="loading-placeholder"><div class="spinner"></div><p>Memuat berita...</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Agenda</div>
+      <h2 class="section-title">Kegiatan Mendatang</h2>
+      <p class="section-sub">Jadwal acara dan kegiatan sekolah yang akan datang.</p>
+    </div>
+    <div class="agenda-list" id="agenda-container">
+      <div class="loading-placeholder"><div class="spinner"></div><p>Memuat agenda...</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GURU -->
+<section id="guru">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Tenaga Pengajar</div>
+      <h2 class="section-title">Guru & Staf SD Industri</h2>
+      <p class="section-sub">Tim pengajar berdedikasi yang membimbing siswa dengan penuh semangat.</p>
+    </div>
+    <div class="guru-grid" id="guru-container">
+      <div class="loading-placeholder" style="grid-column:1/-1"><div class="spinner"></div><p>Memuat data guru...</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERI -->
+<section id="galeri">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Galeri</div>
+      <h2 class="section-title">Dokumentasi Kegiatan</h2>
+      <p class="section-sub">Momen berharga kegiatan belajar dan acara di SD Industri.</p>
+    </div>
+    <div class="galeri-grid" id="galeri-container">
+      <div class="loading-placeholder" style="grid-column:1/-1"><div class="spinner"></div><p>Memuat galeri...</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFIL -->
+<section id="profil">
+  <div class="container">
+    <div class="profil-grid">
+      <div class="profil-info">
+        <div class="section-label">Profil Sekolah</div>
+        <h2>Mengenal SD Industri Bandung</h2>
+        <p>SD Industri adalah sekolah dasar negeri yang berlokasi di Jl. Industri Dalam No. 2, Kecamatan Cicendo, Kota Bandung. Sekolah kami menyelenggarakan pendidikan dasar berkualitas dengan sistem double shift untuk melayani lebih banyak siswa.</p>
+        <table class="info-table">
+          <tr><td>NPSN</td><td>20219595</td></tr>
+          <tr><td>Status</td><td>Negeri</td></tr>
+          <tr><td>Akreditasi</td><td>B</td></tr>
+          <tr><td>Alamat</td><td>Jl. Industri Dalam No. 2</td></tr>
+          <tr><td>Kecamatan</td><td>Cicendo, Bandung</td></tr>
+          <tr><td>Telepon</td><td>(022) 6120020</td></tr>
+          <tr><td>Jumlah Siswa</td><td>97 siswa (45 L / 52 P)</td></tr>
+          <tr><td>Jumlah Rombel</td><td>6 rombongan belajar</td></tr>
+          <tr><td>Waktu Belajar</td><td>Double Shift / 6 hari</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="profil-visi">
+          <h3>🌟 Visi Sekolah</h3>
+          <p>Terwujudnya peserta didik yang beriman, berilmu, dan berakhlak mulia serta mampu bersaing di era global.</p>
+
+          <h3>🎯 Misi Sekolah</h3>
+          <ul>
+            <li>Menyelenggarakan pembelajaran yang aktif, inovatif, kreatif, dan menyenangkan</li>
+            <li>Menumbuhkan semangat keunggulan kepada seluruh warga sekolah</li>
+            <li>Membiasakan perilaku islami dan budi pekerti luhur</li>
+            <li>Menjalin kerjasama yang harmonis antara sekolah, orang tua, dan masyarakat</li>
+            <li>Meningkatkan kompetensi tenaga pendidik secara berkelanjutan</li>
+          </ul>
+
+          <h3 style="margin-top:20px">📊 Data Siswa per Kelas</h3>
+          <table class="info-table" style="margin-top:8px">
+            <tr><td>Kelas 1</td><td>12 siswa</td></tr>
+            <tr><td>Kelas 2</td><td>7 siswa</td></tr>
+            <tr><td>Kelas 3</td><td>14 siswa</td></tr>
+            <tr><td>Kelas 4</td><td>12 siswa</td></tr>
+            <tr><td>Kelas 5</td><td>43 siswa</td></tr>
+            <tr><td>Kelas 6</td><td>12 siswa</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAK -->
+<section id="kontak">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Kontak</div>
+      <h2 class="section-title">Hubungi Kami</h2>
+    </div>
+    <div class="kontak-grid">
+      <div class="kontak-detail">
+        <div class="kontak-item">
+          <div class="kontak-icon">📍</div>
+          <div class="kontak-text">
+            <strong>Alamat</strong>
+            <span>Jl. Industri Dalam No. 2, Kec. Cicendo, Kota Bandung, Jawa Barat</span>
+          </div>
+        </div>
+        <div class="kontak-item">
+          <div class="kontak-icon">📞</div>
+          <div class="kontak-text">
+            <strong>Telepon</strong>
+            <span>(022) 6120020</span>
+          </div>
+        </div>
+        <div class="kontak-item">
+          <div class="kontak-icon">🌐</div>
+          <div class="kontak-text">
+            <strong>Website Resmi</strong>
+            <span>www.sd-industri.com</span>
+          </div>
+        </div>
+        <div class="kontak-item">
+          <div class="kontak-icon">📸</div>
+          <div class="kontak-text">
+            <strong>Instagram</strong>
+            <span>@sdindustri</span>
+          </div>
+        </div>
+        <div class="kontak-item">
+          <div class="kontak-icon">🕐</div>
+          <div class="kontak-text">
+            <strong>Jam Operasional</strong>
+            <span>Senin–Sabtu, 07.00–14.00 WIB</span>
+          </div>
+        </div>
+      </div>
+      <div class="kontak-map">
+        <iframe
+          src="https://maps.google.com/maps?q=-6.9126,107.5948&t=&z=16&ie=UTF8&iwloc=&output=embed"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <p>© 2025 SD Industri Bandung · NPSN 20219595</p>
+      <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Kembali ke atas</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+//  KONFIGURASI — GANTI URL INI SETELAH DEPLOY APPS SCRIPT
+// ============================================================
+const API_URL = 'GANTI_DENGAN_URL_APPS_SCRIPT_ANDA';
+
+// ============================================================
+//  FETCH DATA DARI APPS SCRIPT
+// ============================================================
+async function fetchPublic(sheet) {
+  try {
+    const res = await fetch(`${API_URL}?sheet=${sheet}&public=true`);
+    const json = await res.json();
+    return json.success ? json.data : [];
+  } catch {
+    return [];
+  }
+}
+
+// ============================================================
+//  RENDER BERITA
+// ============================================================
+async function loadBerita() {
+  const data = await fetchPublic('berita');
+  const container = document.getElementById('berita-container');
+
+  if (!data.length) {
+    container.innerHTML = '<div class="loading-placeholder"><div class="icon">📰</div><p>Belum ada berita saat ini.</p></div>';
+    return;
+  }
+
+  container.innerHTML = data.slice(0, 6).map(b => `
+    <div class="berita-card">
+      <div class="berita-img">
+        ${b.gambar ? `<img src="${b.gambar}" alt="${b.judul}" onerror="this.parentElement.innerHTML='📰'"/>` : '📰'}
+      </div>
+      <div class="berita-body">
+        <div class="berita-tag">${b.kategori || 'Berita'}</div>
+        <div class="berita-title">${b.judul || '-'}</div>
+        <div class="berita-date">📅 ${b.tanggal || '-'}</div>
+        <div class="berita-isi">${b.isi || ''}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+//  RENDER AGENDA
+// ============================================================
+async function loadAgenda() {
+  const data = await fetchPublic('agenda');
+  const container = document.getElementById('agenda-container');
+
+  if (!data.length) {
+    container.innerHTML = '<div class="data-empty"><div class="icon">🗓️</div><p>Belum ada agenda mendatang.</p></div>';
+    return;
+  }
+
+  container.innerHTML = data.slice(0, 6).map(a => {
+    const parts = (a.tanggal || '').split('/');
+    const day   = parts[0] || '—';
+    const months = ['','Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    const month = months[parseInt(parts[1])] || parts[1] || '—';
+    return `
+      <div class="agenda-item">
+        <div class="agenda-date"><div class="day">${day}</div><div class="month">${month}</div></div>
+        <div class="agenda-info">
+          <h4>${a.judul || '-'}</h4>
+          <p>${a.deskripsi || ''}</p>
+          ${a.lokasi ? `<div class="agenda-loc">📍 ${a.lokasi}</div>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ============================================================
+//  RENDER GURU
+// ============================================================
+async function loadGuru() {
+  const data = await fetchPublic('guru');
+  const container = document.getElementById('guru-container');
+
+  if (!data.length) {
+    container.innerHTML = '<div class="loading-placeholder"><div class="icon">👨‍🏫</div><p>Data guru belum tersedia.</p></div>';
+    return;
+  }
+
+  container.innerHTML = data.map(g => `
+    <div class="guru-card">
+      <div class="guru-avatar">
+        ${g.foto ? `<img src="${g.foto}" alt="${g.nama}" onerror="this.parentElement.innerHTML='👤'"/>` : '👤'}
+      </div>
+      <div class="guru-name">${g.nama || '-'}</div>
+      <div class="guru-jabatan">${g.jabatan || 'Guru'}</div>
+      <div class="guru-mapel">${g.mata_pelajaran || ''}</div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+//  RENDER GALERI
+// ============================================================
+async function loadGaleri() {
+  const data = await fetchPublic('galeri');
+  const container = document.getElementById('galeri-container');
+
+  if (!data.length) {
+    container.innerHTML = '<div class="loading-placeholder" style="grid-column:1/-1"><div class="icon">🖼️</div><p>Galeri foto belum tersedia.</p></div>';
+    return;
+  }
+
+  container.innerHTML = data.slice(0, 8).map(g => `
+    <div class="galeri-item">
+      ${g.url_gambar
+        ? `<img src="${g.url_gambar}" alt="${g.judul||''}" loading="lazy" onerror="this.parentElement.innerHTML='🖼️'"/>`
+        : '🖼️'
+      }
+      <div class="galeri-overlay">${g.judul || ''}</div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+//  NAV + INIT
+// ============================================================
+function toggleMenu() {
+  document.getElementById('nav-mobile').classList.toggle('open');
+}
+
+// Active nav on scroll
+const sections = ['berita','agenda','guru','galeri','profil','kontak'];
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY + 80;
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+    if (!link) return;
+    if (el.offsetTop <= scrollY && el.offsetTop + el.offsetHeight > scrollY) {
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      link.classList.add('active');
+    }
+  });
+});
+
+// Load semua data
+loadBerita();
+loadAgenda();
+loadGuru();
+loadGaleri();
+</script>
+</body>
+</html>
