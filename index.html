@@ -451,10 +451,13 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbw62t9g-ZgCt-yT26lUsXId
 // ============================================================
 async function fetchPublic(sheet) {
   try {
-    const res = await fetch(`${API_URL}?sheet=${sheet}&public=true`);
-    const json = await res.json();
+    const params = new URLSearchParams({ action: 'get', sheet, public: 'true' });
+    const res = await fetch(`${API_URL}?${params.toString()}`);
+    const text = await res.text();
+    const json = JSON.parse(text);
     return json.success ? json.data : [];
-  } catch {
+  } catch(e) {
+    console.error('fetchPublic error:', e);
     return [];
   }
 }
