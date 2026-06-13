@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+<title>Balapan Pintar — SD Industri</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;touch-action:none;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+body{background:#0d1b2a;display:flex;flex-direction:column;align-items:center;justify-content:space-between;}
+
+.hdr{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:rgba(255,255,255,.05);}
+.hdr-title{color:#fff;font-size:20px;font-weight:800;}
+.hdr-btn{background:rgba(255,255,255,.12);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:13px;cursor:pointer;}
+
+/* TRACK */
+.track-area{width:100%;max-width:900px;padding:0 16px;display:flex;flex-direction:column;gap:10px;}
+.lane{display:flex;align-items:center;gap:10px;height:64px;}
+.lane-label{color:#fff;font-weight:800;font-size:clamp(12px,1.5vw,16px);width:80px;text-align:right;flex-shrink:0;}
+.lane-label.red{color:#EF5350;}
+.lane-label.blue{color:#42A5F5;}
+.track{flex:1;background:rgba(255,255,255,.07);border-radius:32px;height:100%;position:relative;overflow:hidden;border:2px solid rgba(255,255,255,.1);}
+.track-stripes{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(255,255,255,.03) 40px,rgba(255,255,255,.03) 42px);}
+.finish-flag{position:absolute;right:0;top:0;height:100%;width:44px;background:repeating-conic-gradient(#fff 0% 25%,#222 0% 50%) 0 0/20px 20px;opacity:.7;border-radius:0 30px 30px 0;}
+.car{position:absolute;top:50%;transform:translateY(-50%);font-size:clamp(28px,4vw,44px);transition:left .4s cubic-bezier(.34,1.56,.64,1);will-change:left;}
+.progress-bar{position:absolute;bottom:0;left:0;height:5px;border-radius:0 3px 3px 0;transition:width .4s;}
+.progress-bar.red{background:#EF5350;}
+.progress-bar.blue{background:#42A5F5;}
+
+/* Q AREA */
+.q-section{width:100%;max-width:900px;padding:0 16px;display:flex;flex-direction:column;gap:10px;}
+.timer-bar-wrap{width:100%;height:7px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;}
+.timer-bar{height:100%;background:#F9A825;border-radius:4px;transition:width .1s linear,background .1s;}
+.q-box{background:rgba(255,255,255,.07);border-radius:14px;padding:16px 20px;}
+.q-meta{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
+.q-subject{background:#F9A825;color:#4a2c00;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;}
+.q-counter{color:rgba(255,255,255,.5);font-size:13px;}
+.q-text{color:#fff;font-size:clamp(16px,2.5vw,24px);font-weight:600;text-align:center;line-height:1.4;}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.choice{padding:clamp(14px,2vw,20px) 16px;border-radius:12px;font-size:clamp(14px,2vw,20px);font-weight:700;text-align:center;cursor:pointer;border:3px solid;transition:transform .1s;position:relative;}
+.choice:active{transform:scale(.96);}
+.choice.A,.choice.B{background:rgba(239,83,80,.15);border-color:#EF5350;color:#EF9A9A;}
+.choice.C,.choice.D{background:rgba(66,165,245,.15);border-color:#42A5F5;color:#90CAF9;}
+.choice.correct{background:rgba(76,175,80,.3)!important;border-color:#4CAF50!important;color:#A5D6A7!important;}
+.choice.wrong{background:rgba(244,67,54,.3)!important;border-color:#F44336!important;opacity:.6;}
+.team-hint{display:block;font-size:11px;font-weight:600;margin-bottom:3px;opacity:.8;}
+
+/* SCORES */
+.score-row{display:flex;justify-content:space-around;width:100%;max-width:900px;padding:4px 16px;}
+.score-pill{padding:6px 20px;border-radius:20px;font-size:clamp(13px,1.8vw,17px);font-weight:800;}
+.score-pill.red{background:rgba(239,83,80,.2);color:#EF9A9A;}
+.score-pill.blue{background:rgba(66,165,245,.2);color:#90CAF9;}
+
+/* SCREENS */
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;z-index:100;padding:24px;background:linear-gradient(135deg,#0d1b2a,#1a2a40);}
+.screen.hidden{display:none;}
+.screen h2{font-size:clamp(26px,5vw,48px);font-weight:900;color:#fff;text-align:center;}
+.screen p{font-size:clamp(13px,2vw,18px);color:rgba(255,255,255,.7);text-align:center;max-width:480px;}
+.big-btn{padding:14px 40px;border-radius:14px;font-size:clamp(15px,2.2vw,20px);font-weight:800;border:none;cursor:pointer;}
+.big-btn.green{background:#4CAF50;color:#fff;}
+.big-btn.yellow{background:#F9A825;color:#4a2c00;}
+.select-wrap{display:flex;flex-direction:column;gap:8px;width:100%;max-width:380px;}
+.select-wrap label{color:rgba(255,255,255,.7);font-size:14px;}
+.select-wrap select{padding:10px 14px;border-radius:10px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-size:15px;outline:none;}
+.feedback{position:fixed;top:35%;left:50%;transform:translate(-50%,-50%);font-size:clamp(24px,5vw,60px);font-weight:900;pointer-events:none;z-index:200;opacity:0;transition:opacity .2s;text-align:center;}
+.win-big{font-size:clamp(28px,6vw,72px);}
+.result-row{display:flex;gap:24px;align-items:center;}
+.rb{text-align:center;}
+.rb-v{font-size:clamp(28px,5vw,52px);font-weight:900;}
+.rb-l{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+.rb.red .rb-v{color:#EF5350;} .rb.red .rb-l{color:#EF9A9A;}
+.rb.blue .rb-v{color:#42A5F5;} .rb.blue .rb-l{color:#90CAF9;}
+.vs-sep{color:rgba(255,255,255,.3);font-size:22px;font-weight:900;}
+</style>
+</head>
+<body>
+
+<!-- START -->
+<div class="screen" id="start-screen">
+  <div style="font-size:64px">🏎️</div>
+  <h2>Balapan Pintar!</h2>
+  <p>Tim Merah (A/B) vs Tim Biru (C/D). Jawab soal dengan benar agar mobilmu melaju ke garis finish!</p>
+  <div class="select-wrap">
+    <label>Mata Pelajaran</label>
+    <select id="subject-select"><option value="all">Semua</option></select>
+    <label style="margin-top:6px">Jumlah Soal</label>
+    <select id="count-select">
+      <option value="5">5 soal</option>
+      <option value="10" selected>10 soal</option>
+      <option value="15">15 soal</option>
+    </select>
+  </div>
+  <div id="load-status" style="color:rgba(255,255,255,.5);font-size:14px">Memuat soal...</div>
+  <button class="big-btn green" id="start-btn" onclick="startGame()" style="display:none">▶ Gas!</button>
+  <button class="hdr-btn" onclick="location.href='index.html'" style="background:rgba(255,255,255,.1);margin-top:4px">← Kembali</button>
+</div>
+
+<!-- GAME -->
+<div class="hdr">
+  <div class="hdr-title">🏎️ Balapan Pintar</div>
+  <button class="hdr-btn" onclick="if(confirm('Keluar?'))location.href='index.html'">✕ Keluar</button>
+</div>
+
+<div class="score-row">
+  <div class="score-pill red">🔴 Merah: <span id="score-red">0</span></div>
+  <div class="score-pill blue">🔵 Biru: <span id="score-blue">0</span></div>
+</div>
+
+<div class="track-area">
+  <div class="lane">
+    <div class="lane-label red">🔴<br/>Merah</div>
+    <div class="track">
+      <div class="track-stripes"></div>
+      <div class="progress-bar red" id="prog-red" style="width:0%"></div>
+      <div class="car" id="car-red" style="left:2%">🚗</div>
+      <div class="finish-flag"></div>
+    </div>
+  </div>
+  <div class="lane">
+    <div class="lane-label blue">🔵<br/>Biru</div>
+    <div class="track">
+      <div class="track-stripes"></div>
+      <div class="progress-bar blue" id="prog-blue" style="width:0%"></div>
+      <div class="car" id="car-blue" style="left:2%">🚙</div>
+      <div class="finish-flag"></div>
+    </div>
+  </div>
+</div>
+
+<div class="q-section">
+  <div class="timer-bar-wrap"><div class="timer-bar" id="timer-bar"></div></div>
+  <div class="q-box">
+    <div class="q-meta">
+      <span class="q-subject" id="q-subject">Umum</span>
+      <span class="q-counter" id="q-counter">1/10</span>
+    </div>
+    <div class="q-text" id="q-text">Memuat soal...</div>
+  </div>
+  <div class="choices" id="choices-wrap"></div>
+</div>
+
+<!-- END -->
+<div class="screen hidden" id="end-screen">
+  <div class="win-big" id="win-emoji"></div>
+  <h2 id="win-text"></h2>
+  <p id="win-sub"></p>
+  <div class="result-row">
+    <div class="rb red"><div class="rb-v" id="final-red">0</div><div class="rb-l">Tim Merah</div></div>
+    <div class="vs-sep">VS</div>
+    <div class="rb blue"><div class="rb-v" id="final-blue">0</div><div class="rb-l">Tim Biru</div></div>
+  </div>
+  <div style="display:flex;gap:12px;margin-top:8px">
+    <button class="big-btn green" onclick="restartGame()">🔄 Main Lagi</button>
+    <button class="big-btn yellow" onclick="location.href='index.html'">🏠 Menu</button>
+  </div>
+</div>
+
+<div class="feedback" id="feedback"></div>
+
+<script>
+const API_URL = 'GANTI_DENGAN_URL_APPS_SCRIPT_ANDA';
+const TIMER_SEC = 15;
+const STEP = 9; // % per jawaban benar
+
+let allQ=[], filtered=[], currentQ=0, totalQ=10;
+let posRed=2, posBlue=2, scoreRed=0, scoreBlue=0;
+let timer, timerLeft, answered=false;
+
+async function loadQuestions() {
+  try {
+    const params = new URLSearchParams({action:'get',sheet:'soal_game',public:'true'});
+    const res = await fetch(`${API_URL}?${params}`);
+    const json = JSON.parse(await res.text());
+    if (json.success && json.data.length) { allQ = json.data.filter(q=>q.pertanyaan&&q.jawaban_benar); populateSubjects(); showStart(); }
+    else useFallback();
+  } catch { useFallback(); }
+}
+
+function useFallback() {
+  allQ=[
+    {pertanyaan:'3 × 9 = ?',pilihan_a:'24',pilihan_b:'27',pilihan_c:'30',pilihan_d:'21',jawaban_benar:'B',mata_pelajaran:'Matematika'},
+    {pertanyaan:'Air mendidih pada suhu berapa (°C)?',pilihan_a:'90',pilihan_b:'80',pilihan_c:'100',pilihan_d:'110',jawaban_benar:'C',mata_pelajaran:'IPA'},
+    {pertanyaan:'Presiden pertama Indonesia?',pilihan_a:'Soeharto',pilihan_b:'Habibie',pilihan_c:'Soekarno',pilihan_d:'Wahid',jawaban_benar:'C',mata_pelajaran:'IPS'},
+    {pertanyaan:'50 + 75 = ?',pilihan_a:'115',pilihan_b:'135',pilihan_c:'125',pilihan_d:'120',jawaban_benar:'C',mata_pelajaran:'Matematika'},
+    {pertanyaan:'Hewan pemakan tumbuhan disebut?',pilihan_a:'Karnivora',pilihan_b:'Omnivora',pilihan_c:'Herbivora',pilihan_d:'Insektivora',jawaban_benar:'C',mata_pelajaran:'IPA'},
+    {pertanyaan:'Lagu "Indonesia Raya" diciptakan oleh?',pilihan_a:'Chairil Anwar',pilihan_b:'WR Supratman',pilihan_c:'Ismail Marzuki',pilihan_d:'Kusbini',jawaban_benar:'B',mata_pelajaran:'IPS'},
+    {pertanyaan:'144 ÷ 12 = ?',pilihan_a:'10',pilihan_b:'11',pilihan_c:'13',pilihan_d:'12',jawaban_benar:'D',mata_pelajaran:'Matematika'},
+    {pertanyaan:'Kata "cepat" adalah kata sifat jenis?',pilihan_a:'Ukuran',pilihan_b:'Warna',pilihan_c:'Kecepatan',pilihan_d:'Waktu',jawaban_benar:'C',mata_pelajaran:'B.Indonesia'},
+    {pertanyaan:'Benda yang menyerap panas matahari paling baik?',pilihan_a:'Putih',pilihan_b:'Kuning',pilihan_c:'Hijau',pilihan_d:'Hitam',jawaban_benar:'D',mata_pelajaran:'IPA'},
+    {pertanyaan:'Bilangan prima antara 10–20?',pilihan_a:'11,13,17,19',pilihan_b:'11,12,13',pilihan_c:'13,15,17',pilihan_d:'11,13,15',jawaban_benar:'A',mata_pelajaran:'Matematika'},
+  ];
+  populateSubjects(); showStart();
+}
+
+function populateSubjects() {
+  const subj=[...new Set(allQ.map(q=>q.mata_pelajaran).filter(Boolean))];
+  const sel=document.getElementById('subject-select');
+  subj.forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s; sel.appendChild(o); });
+}
+
+function showStart() {
+  document.getElementById('load-status').style.display='none';
+  document.getElementById('start-btn').style.display='block';
+}
+
+function startGame() {
+  const subj=document.getElementById('subject-select').value;
+  totalQ=parseInt(document.getElementById('count-select').value);
+  filtered=allQ.filter(q=>subj==='all'||q.mata_pelajaran===subj);
+  if(filtered.length<3){alert('Soal tidak cukup!');return;}
+  filtered=shuffle(filtered).slice(0,totalQ);
+  currentQ=0;posRed=2;posBlue=2;scoreRed=0;scoreBlue=0;
+  updateCars();updateScores();
+  document.getElementById('start-screen').classList.add('hidden');
+  showQ();
+}
+
+function showQ() {
+  if(currentQ>=filtered.length){endGame();return;}
+  const q=filtered[currentQ];
+  answered=false;
+  document.getElementById('q-subject').textContent=q.mata_pelajaran||'Umum';
+  document.getElementById('q-counter').textContent=`${currentQ+1}/${filtered.length}`;
+  document.getElementById('q-text').textContent=q.pertanyaan;
+
+  const opts=[{k:'A',t:q.pilihan_a},{k:'B',t:q.pilihan_b},{k:'C',t:q.pilihan_c},{k:'D',t:q.pilihan_d}].filter(o=>o.t);
+  document.getElementById('choices-wrap').innerHTML=opts.map(o=>`
+    <div class="choice ${o.k}" data-key="${o.k}" ontouchstart="answer('${o.k}')" onclick="answer('${o.k}')">
+      <span class="team-hint">${o.k==='A'||o.k==='B'?'🔴 Tim Merah':'🔵 Tim Biru'}</span>
+      <b>${o.k}.</b> ${o.t}
+    </div>`).join('');
+  startTimer();
+}
+
+function answer(chosen) {
+  if(answered)return;
+  answered=true; clearInterval(timer);
+  const q=filtered[currentQ];
+  const correct=(q.jawaban_benar||'').trim().toUpperCase();
+  const isRight=chosen.toUpperCase()===correct;
+  const isRed=chosen==='A'||chosen==='B';
+
+  document.querySelectorAll('.choice').forEach(el=>{
+    if(el.dataset.key===correct)el.classList.add('correct');
+    else if(el.dataset.key===chosen)el.classList.add('wrong');
+  });
+
+  if(isRight){
+    if(isRed){scoreRed++;posRed=Math.min(88,posRed+STEP);showFeedback('🔴 Vroom! +1','#EF5350');}
+    else{scoreBlue++;posBlue=Math.min(88,posBlue+STEP);showFeedback('🔵 Vroom! +1','#42A5F5');}
+    updateCars(); updateScores();
+    if(posRed>=88){endGame('red');return;}
+    if(posBlue>=88){endGame('blue');return;}
+  } else {
+    showFeedback('❌ Salah!','#aaa');
+  }
+  setTimeout(()=>{currentQ++;showQ();},1700);
+}
+
+function startTimer() {
+  timerLeft=TIMER_SEC;
+  const bar=document.getElementById('timer-bar');
+  bar.style.width='100%';bar.style.background='#F9A825';
+  clearInterval(timer);
+  timer=setInterval(()=>{
+    timerLeft--;
+    const pct=(timerLeft/TIMER_SEC)*100;
+    bar.style.width=pct+'%';
+    if(pct<30)bar.style.background='#EF5350';
+    if(timerLeft<=0){clearInterval(timer);if(!answered){answered=true;showFeedback('⏰ Waktu!','#F9A825');setTimeout(()=>{currentQ++;showQ();},1400);}}
+  },1000);
+}
+
+function updateCars() {
+  document.getElementById('car-red').style.left=posRed+'%';
+  document.getElementById('car-blue').style.left=posBlue+'%';
+  document.getElementById('prog-red').style.width=posRed+'%';
+  document.getElementById('prog-blue').style.width=posBlue+'%';
+}
+
+function updateScores() {
+  document.getElementById('score-red').textContent=scoreRed;
+  document.getElementById('score-blue').textContent=scoreBlue;
+}
+
+function showFeedback(msg,color) {
+  const el=document.getElementById('feedback');
+  el.textContent=msg;el.style.color=color;el.style.opacity='1';
+  setTimeout(()=>el.style.opacity='0',900);
+}
+
+function endGame(winner) {
+  clearInterval(timer);
+  document.getElementById('end-screen').classList.remove('hidden');
+  document.getElementById('final-red').textContent=scoreRed;
+  document.getElementById('final-blue').textContent=scoreBlue;
+  const em=document.getElementById('win-emoji');
+  const wt=document.getElementById('win-text');
+  const ws=document.getElementById('win-sub');
+  const w=winner||(scoreRed>scoreBlue?'red':scoreBlue>scoreRed?'blue':'tie');
+  if(w==='red'){em.textContent='🔴🏆';wt.style.color='#EF5350';wt.textContent='Tim Merah Menang!';ws.textContent='Mobil merah sampai duluan!';}
+  else if(w==='blue'){em.textContent='🔵🏆';wt.style.color='#42A5F5';wt.textContent='Tim Biru Menang!';ws.textContent='Mobil biru sampai duluan!';}
+  else{em.textContent='🤝';wt.style.color='#F9A825';wt.textContent='Seri!';ws.textContent='Kedua tim sama-sama keren!';}
+}
+
+function restartGame(){document.getElementById('end-screen').classList.add('hidden');document.getElementById('start-screen').classList.remove('hidden');}
+function shuffle(arr){return[...arr].sort(()=>Math.random()-.5);}
+loadQuestions();
+</script>
+</body>
+</html>
