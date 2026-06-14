@@ -6,372 +6,338 @@
 <title>Tarik Tambang — SD Industri</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --red:#C62828;--red-l:#EF5350;--red-pale:#FFEBEE;
-  --blue:#1565C0;--blue-l:#1E88E5;--blue-pale:#E3F2FD;
-  --green:#2E7D32;--yellow:#F9A825;
-  --text:#1a1a1a;--muted:#555;--white:#fff;
-  --radius:16px;
-}
-html,body{width:100%;height:100%;overflow:hidden;touch-action:none;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#1a1a2e;display:flex;flex-direction:column;align-items:center;justify-content:space-between;}
+html,body{width:100%;height:100%;overflow:hidden;touch-action:none;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+body{background:#0f0f23;display:flex;flex-direction:column;align-items:center;}
 
 /* HEADER */
-.hdr{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:rgba(255,255,255,.06);}
-.hdr-title{color:#fff;font-size:20px;font-weight:800;}
-.hdr-btn{background:rgba(255,255,255,.12);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:13px;cursor:pointer;}
+.hdr{width:100%;display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:rgba(255,255,255,.05);flex-shrink:0;}
+.hdr-title{color:#fff;font-size:18px;font-weight:800;}
+.hdr-btn{background:rgba(255,255,255,.1);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:13px;cursor:pointer;}
 
 /* SCORES */
-.scores{width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 24px;}
-.score-box{text-align:center;}
-.score-label{font-size:clamp(14px,2vw,18px);font-weight:700;text-transform:uppercase;letter-spacing:1px;}
-.score-num{font-size:clamp(32px,5vw,56px);font-weight:900;line-height:1;}
-.score-box.red .score-label{color:#EF9A9A;}
-.score-box.red .score-num{color:#EF5350;}
-.score-box.blue .score-label{color:#90CAF9;}
-.score-box.blue .score-num{color:#42A5F5;}
+.scoreboard{width:100%;display:flex;align-items:center;justify-content:space-between;padding:6px 24px;flex-shrink:0;}
+.team-score{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.team-name{font-size:clamp(13px,1.8vw,17px);font-weight:800;text-transform:uppercase;letter-spacing:.5px;}
+.team-pts{font-size:clamp(28px,5vw,48px);font-weight:900;line-height:1;}
+.team-score.red .team-name{color:#FF7675;}
+.team-score.red .team-pts{color:#EF5350;}
+.team-score.blue .team-name{color:#74B9FF;}
+.team-score.blue .team-pts{color:#42A5F5;}
+.vs-mid{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.q-badge{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:12px;padding:3px 10px;border-radius:10px;}
 
-/* ROPE ARENA */
-.arena{width:100%;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 16px;gap:16px;}
-.rope-wrap{width:100%;max-width:860px;position:relative;height:80px;display:flex;align-items:center;}
-.rope-track{width:100%;height:20px;background:#5D4037;border-radius:10px;position:relative;overflow:visible;}
-.rope-fill-red{position:absolute;top:0;left:0;height:100%;border-radius:10px 0 0 10px;background:linear-gradient(90deg,#C62828,#EF5350);transition:width .4s cubic-bezier(.34,1.56,.64,1);}
-.rope-fill-blue{position:absolute;top:0;right:0;height:100%;border-radius:0 10px 10px 0;background:linear-gradient(90deg,#42A5F5,#1565C0);transition:width .4s cubic-bezier(.34,1.56,.64,1);}
-.rope-knot{position:absolute;top:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:#FFF8E1;border-radius:50%;border:4px solid #F9A825;display:flex;align-items:center;justify-content:center;font-size:22px;transition:left .4s cubic-bezier(.34,1.56,.64,1);z-index:2;box-shadow:0 0 0 4px rgba(249,168,37,.3);}
-.center-line{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:4px;height:56px;background:rgba(255,255,255,.3);border-radius:2px;}
+/* ROPE */
+.rope-section{width:100%;max-width:860px;padding:0 20px;flex-shrink:0;}
+.rope-wrap{position:relative;height:56px;display:flex;align-items:center;}
+.rope-track{width:100%;height:18px;background:#4a3728;border-radius:9px;position:relative;overflow:hidden;}
+.rope-red{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,#C62828,#EF5350);border-radius:9px 0 0 9px;transition:width .5s cubic-bezier(.34,1.56,.64,1);}
+.rope-blue{position:absolute;top:0;right:0;height:100%;background:linear-gradient(270deg,#1565C0,#42A5F5);border-radius:0 9px 9px 0;transition:width .5s cubic-bezier(.34,1.56,.64,1);}
+.rope-knot{position:absolute;top:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:#FFF8E1;border-radius:50%;border:3px solid #F9A825;display:flex;align-items:center;justify-content:center;font-size:20px;z-index:2;transition:left .5s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 0 5px rgba(249,168,37,.2);}
+.center-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:3px;height:48px;background:rgba(255,255,255,.2);border-radius:2px;z-index:1;}
 
-/* QUESTION AREA */
-.q-area{width:100%;max-width:860px;background:rgba(255,255,255,.08);border-radius:var(--radius);padding:20px 24px;}
-.q-meta{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-.q-subject{background:var(--yellow);color:#4a2c00;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;}
-.q-num{color:rgba(255,255,255,.5);font-size:13px;}
-.q-text{color:#fff;font-size:clamp(18px,2.8vw,28px);font-weight:600;line-height:1.4;text-align:center;}
+/* TIMER */
+.timer-wrap{width:100%;max-width:860px;padding:4px 20px;flex-shrink:0;}
+.timer-bar-bg{height:7px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;}
+.timer-bar{height:100%;background:#F9A825;border-radius:4px;transition:width .1s linear,background .2s;}
 
-/* CHOICES */
-.choices{width:100%;max-width:860px;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.choice{padding:clamp(14px,2vw,22px) 20px;border-radius:14px;font-size:clamp(15px,2vw,22px);font-weight:700;text-align:center;cursor:pointer;transition:transform .1s,box-shadow .1s;border:3px solid transparent;}
-.choice:active{transform:scale(.96);}
-.choice.A{background:rgba(239,83,80,.18);border-color:#EF5350;color:#EF9A9A;}
-.choice.A:hover{background:rgba(239,83,80,.32);}
-.choice.B{background:rgba(239,83,80,.18);border-color:#EF5350;color:#EF9A9A;}
-.choice.B:hover{background:rgba(239,83,80,.32);}
-.choice.C{background:rgba(66,165,245,.18);border-color:#42A5F5;color:#90CAF9;}
-.choice.C:hover{background:rgba(66,165,245,.32);}
-.choice.D{background:rgba(66,165,245,.18);border-color:#42A5F5;color:#90CAF9;}
-.choice.D:hover{background:rgba(66,165,245,.32);}
-.choice.correct{background:rgba(76,175,80,.35)!important;border-color:#4CAF50!important;color:#A5D6A7!important;transform:scale(1.03);}
-.choice.wrong{background:rgba(244,67,54,.35)!important;border-color:#F44336!important;opacity:.6;}
-.choice-hint{position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-size:11px;white-space:nowrap;font-weight:600;}
-.choice.A .choice-hint,.choice.B .choice-hint{color:#EF9A9A;}
-.choice.C .choice-hint,.choice.D .choice-hint{color:#90CAF9;}
-.choice-wrap{position:relative;}
+/* QUESTION */
+.q-section{width:100%;max-width:860px;padding:6px 20px 4px;flex-shrink:0;}
+.q-box{background:rgba(255,255,255,.07);border-radius:14px;padding:14px 20px;text-align:center;}
+.q-meta{display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:8px;}
+.q-tag{background:#F9A825;color:#3a2000;padding:2px 12px;border-radius:14px;font-size:11px;font-weight:700;}
+.q-text{color:#fff;font-size:clamp(17px,2.8vw,26px);font-weight:700;line-height:1.35;}
 
-/* TIMER BAR */
-.timer-bar-wrap{width:100%;max-width:860px;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;}
-.timer-bar{height:100%;background:#F9A825;border-radius:4px;transition:width .1s linear,background .1s;}
+/* CHOICES — tengah layar, semua tim bisa pilih */
+.choices-wrap{width:100%;max-width:860px;padding:6px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px;flex-shrink:0;}
+.choice{padding:clamp(16px,2.2vw,24px) 20px;border-radius:14px;font-size:clamp(15px,2.2vw,22px);font-weight:700;text-align:center;cursor:pointer;transition:transform .1s,box-shadow .1s;border:2.5px solid;position:relative;background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.2);}
+.choice:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4);}
+.choice:active{transform:scale(.95);}
+.choice .key-badge{display:inline-block;background:rgba(255,255,255,.15);border-radius:6px;padding:1px 8px;font-size:13px;margin-right:8px;font-weight:800;}
+.choice.correct{background:rgba(76,175,80,.3)!important;border-color:#4CAF50!important;color:#A5D6A7!important;transform:scale(1.03);}
+.choice.wrong{background:rgba(244,67,54,.25)!important;border-color:#EF5350!important;opacity:.5;}
+.choice.highlight-red{background:rgba(239,83,80,.2);border-color:#EF5350;animation:pulse-red .4s;}
+.choice.highlight-blue{background:rgba(66,165,245,.2);border-color:#42A5F5;animation:pulse-blue .4s;}
+@keyframes pulse-red{0%,100%{box-shadow:0 0 0 0 rgba(239,83,80,0)}50%{box-shadow:0 0 0 12px rgba(239,83,80,.3)}}
+@keyframes pulse-blue{0%,100%{box-shadow:0 0 0 0 rgba(66,165,245,0)}50%{box-shadow:0 0 0 12px rgba(66,165,245,.3)}}
+
+/* INSTRUKSI */
+.instr{width:100%;max-width:860px;padding:0 20px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.instr-team{font-size:clamp(11px,1.4vw,14px);font-weight:600;padding:4px 12px;border-radius:8px;}
+.instr-team.red{background:rgba(239,83,80,.15);color:#FF7675;}
+.instr-team.blue{background:rgba(66,165,245,.15);color:#74B9FF;}
+
+/* FEEDBACK */
+.feedback{position:fixed;top:38%;left:50%;transform:translate(-50%,-50%);font-size:clamp(28px,6vw,64px);font-weight:900;pointer-events:none;z-index:200;opacity:0;transition:opacity .15s;text-align:center;white-space:nowrap;}
 
 /* SCREENS */
-.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;z-index:100;padding:32px;}
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;z-index:100;padding:24px;background:linear-gradient(135deg,#0f0f23,#1a1a3e);}
 .screen.hidden{display:none;}
-#start-screen{background:linear-gradient(135deg,#1a1a2e,#16213e);}
-#end-screen{background:linear-gradient(135deg,#1a1a2e,#16213e);}
-.screen h2{font-size:clamp(28px,5vw,52px);font-weight:900;color:#fff;text-align:center;}
-.screen p{font-size:clamp(14px,2vw,20px);color:rgba(255,255,255,.7);text-align:center;max-width:500px;}
-.big-btn{padding:16px 48px;border-radius:14px;font-size:clamp(16px,2.5vw,22px);font-weight:800;border:none;cursor:pointer;transition:transform .15s;}
-.big-btn:active{transform:scale(.97);}
-.big-btn.green{background:#4CAF50;color:#fff;}
-.big-btn.yellow{background:#F9A825;color:#4a2c00;}
-.select-wrap{display:flex;flex-direction:column;gap:10px;width:100%;max-width:400px;}
-.select-wrap label{color:rgba(255,255,255,.7);font-size:14px;}
-.select-wrap select{padding:10px 14px;border-radius:10px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-size:16px;outline:none;}
-.win-emoji{font-size:clamp(48px,8vw,96px);}
-.win-text{font-size:clamp(24px,4vw,48px);font-weight:900;}
-.win-sub{color:rgba(255,255,255,.6);font-size:clamp(14px,2vw,20px);}
-.scores-final{display:flex;gap:32px;align-items:center;}
-.sf-box{text-align:center;}
-.sf-val{font-size:clamp(28px,5vw,52px);font-weight:900;}
-.sf-lab{font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:4px;}
-.sf-box.red .sf-val{color:#EF5350;} .sf-box.red .sf-lab{color:#EF9A9A;}
-.sf-box.blue .sf-val{color:#42A5F5;} .sf-box.blue .sf-lab{color:#90CAF9;}
-.sf-vs{color:rgba(255,255,255,.3);font-size:24px;font-weight:900;}
-.feedback{position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);font-size:clamp(32px,6vw,72px);font-weight:900;pointer-events:none;z-index:200;opacity:0;transition:opacity .15s;}
-.loading-msg{color:rgba(255,255,255,.6);font-size:16px;}
+.screen h2{font-size:clamp(24px,5vw,48px);font-weight:900;color:#fff;text-align:center;}
+.screen p{font-size:clamp(13px,2vw,17px);color:rgba(255,255,255,.7);text-align:center;max-width:500px;line-height:1.6;}
+.big-btn{padding:14px 40px;border-radius:14px;font-size:clamp(15px,2.2vw,20px);font-weight:800;border:none;cursor:pointer;}
+.btn-green{background:#4CAF50;color:#fff;}
+.btn-yellow{background:#F9A825;color:#3a2000;}
+.sel-wrap{display:flex;flex-direction:column;gap:8px;width:100%;max-width:380px;}
+.sel-wrap label{color:rgba(255,255,255,.7);font-size:13px;}
+.sel-wrap select{padding:10px 14px;border-radius:10px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-size:15px;outline:none;}
+.result-row{display:flex;gap:28px;align-items:center;}
+.rbox{text-align:center;}
+.rbox-v{font-size:clamp(28px,5vw,52px);font-weight:900;}
+.rbox-l{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:3px;}
+.rbox.red .rbox-v{color:#EF5350;}.rbox.red .rbox-l{color:#FF7675;}
+.rbox.blue .rbox-v{color:#42A5F5;}.rbox.blue .rbox-l{color:#74B9FF;}
+.vs-sep{color:rgba(255,255,255,.3);font-size:22px;font-weight:900;}
 </style>
 </head>
 <body>
 
-<!-- START SCREEN -->
+<!-- START -->
 <div class="screen" id="start-screen">
-  <div style="font-size:64px">🪢</div>
+  <div style="font-size:60px">🪢</div>
   <h2>Tarik Tambang!</h2>
-  <p>Tim Merah (kiri) vs Tim Biru (kanan). Jawab soal dengan benar untuk menarik tali ke sisi timmu!</p>
-  <div class="select-wrap">
-    <label>Pilih Mata Pelajaran</label>
-    <select id="subject-select">
-      <option value="all">Semua Mata Pelajaran</option>
-    </select>
-    <label style="margin-top:8px">Jumlah Soal</label>
+  <p>Siapa cepat dia dapat! Jawaban tampil di tengah — <strong style="color:#EF5350">Tim Merah</strong> dan <strong style="color:#42A5F5">Tim Biru</strong> berebut menyentuh jawaban yang benar untuk menarik tali ke sisi mereka.</p>
+  <div class="sel-wrap">
+    <label>Mata Pelajaran</label>
+    <select id="subject-select"><option value="all">Semua</option></select>
+    <label style="margin-top:6px">Jumlah Soal</label>
     <select id="count-select">
       <option value="5">5 soal</option>
       <option value="10" selected>10 soal</option>
       <option value="15">15 soal</option>
       <option value="20">20 soal</option>
     </select>
+    <label style="margin-top:6px">Waktu per Soal</label>
+    <select id="time-select">
+      <option value="10">10 detik</option>
+      <option value="15" selected>15 detik</option>
+      <option value="20">20 detik</option>
+    </select>
   </div>
-  <div id="load-status" class="loading-msg">Memuat soal...</div>
-  <button class="big-btn green" id="start-btn" onclick="startGame()" style="display:none">▶ Mulai Game!</button>
-  <button class="hdr-btn" onclick="location.href='index.html'" style="background:rgba(255,255,255,.1)">← Kembali</button>
+  <div id="load-status" style="color:rgba(255,255,255,.5);font-size:14px">Memuat soal...</div>
+  <button class="big-btn btn-green" id="start-btn" onclick="startGame()" style="display:none">▶ Mulai!</button>
+  <button class="hdr-btn" onclick="location.href='index.html'" style="margin-top:4px">← Kembali</button>
 </div>
 
-<!-- GAME UI -->
+<!-- GAME -->
 <div class="hdr">
   <div class="hdr-title">🪢 Tarik Tambang</div>
-  <div style="display:flex;gap:10px;align-items:center">
-    <div id="q-counter" style="color:rgba(255,255,255,.6);font-size:14px"></div>
-    <button class="hdr-btn" onclick="if(confirm('Keluar?'))location.href='index.html'">✕ Keluar</button>
+  <button class="hdr-btn" onclick="if(confirm('Keluar?'))location.href='index.html'">✕</button>
+</div>
+
+<div class="scoreboard">
+  <div class="team-score red">
+    <div class="team-name">🔴 Tim Merah</div>
+    <div class="team-pts" id="score-red">0</div>
+  </div>
+  <div class="vs-mid">
+    <div class="q-badge" id="q-counter">1/10</div>
+    <div style="color:rgba(255,255,255,.4);font-size:11px;margin-top:2px" id="timer-num">15</div>
+  </div>
+  <div class="team-score blue">
+    <div class="team-name">Tim Biru 🔵</div>
+    <div class="team-pts" id="score-blue">0</div>
   </div>
 </div>
 
-<div class="scores">
-  <div class="score-box red">
-    <div class="score-label">🔴 Tim Merah</div>
-    <div class="score-num" id="score-red">0</div>
-  </div>
-  <div class="score-box blue">
-    <div class="score-label">🔵 Tim Biru</div>
-    <div class="score-num" id="score-blue">0</div>
-  </div>
-</div>
-
-<div class="arena">
+<div class="rope-section">
   <div class="rope-wrap">
     <div class="rope-track">
-      <div class="rope-fill-red" id="rope-red" style="width:45%"></div>
-      <div class="rope-fill-blue" id="rope-blue" style="width:45%;right:0;left:auto;position:absolute;top:0;"></div>
-      <div class="center-line"></div>
-      <div class="rope-knot" id="rope-knot" style="left:50%">🪢</div>
+      <div class="rope-red" id="rope-red" style="width:48%"></div>
+      <div class="rope-blue" id="rope-blue" style="width:48%"></div>
     </div>
+    <div class="center-mark"></div>
+    <div class="rope-knot" id="rope-knot" style="left:50%">🪢</div>
   </div>
-  <div class="timer-bar-wrap"><div class="timer-bar" id="timer-bar"></div></div>
-  <div class="q-area">
+</div>
+
+<div class="timer-wrap">
+  <div class="timer-bar-bg"><div class="timer-bar" id="timer-bar"></div></div>
+</div>
+
+<div class="q-section">
+  <div class="q-box">
     <div class="q-meta">
-      <span class="q-subject" id="q-subject">Matematika</span>
-      <span class="q-num" id="q-num">Soal 1/10</span>
+      <span class="q-tag" id="q-tag">Matematika</span>
     </div>
     <div class="q-text" id="q-text">Memuat soal...</div>
   </div>
-  <div class="choices" id="choices-wrap"></div>
 </div>
 
-<!-- END SCREEN -->
+<div class="instr">
+  <div class="instr-team red">🔴 Tim Merah — sentuh kiri layar</div>
+  <div class="instr-team blue">Tim Biru — sentuh kanan layar 🔵</div>
+</div>
+
+<div class="choices-wrap" id="choices-wrap"></div>
+
+<!-- END -->
 <div class="screen hidden" id="end-screen">
-  <div class="win-emoji" id="win-emoji"></div>
-  <div class="win-text" id="win-text"></div>
-  <div class="win-sub" id="win-sub"></div>
-  <div class="scores-final">
-    <div class="sf-box red"><div class="sf-val" id="final-red">0</div><div class="sf-lab">Tim Merah</div></div>
-    <div class="sf-vs">VS</div>
-    <div class="sf-box blue"><div class="sf-val" id="final-blue">0</div><div class="sf-lab">Tim Biru</div></div>
+  <div id="win-emoji" style="font-size:72px"></div>
+  <h2 id="win-text"></h2>
+  <p id="win-sub"></p>
+  <div class="result-row">
+    <div class="rbox red"><div class="rbox-v" id="final-red">0</div><div class="rbox-l">Tim Merah</div></div>
+    <div class="vs-sep">VS</div>
+    <div class="rbox blue"><div class="rbox-v" id="final-blue">0</div><div class="rbox-l">Tim Biru</div></div>
   </div>
-  <div style="display:flex;gap:12px">
-    <button class="big-btn green" onclick="restartGame()">🔄 Main Lagi</button>
-    <button class="big-btn yellow" onclick="location.href='index.html'">🏠 Menu</button>
+  <div style="display:flex;gap:12px;margin-top:8px">
+    <button class="big-btn btn-green" onclick="restartGame()">🔄 Main Lagi</button>
+    <button class="big-btn btn-yellow" onclick="location.href='index.html'">🏠 Menu</button>
   </div>
 </div>
 
-<!-- FEEDBACK -->
 <div class="feedback" id="feedback"></div>
 
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbw62t9g-ZgCt-yT26lUsXId_jFwwvunxr8vHlYzSmzCj9mkdEl0puOWfsZpcYtG1Mjx/exec';
-const TIMER_SEC = 15;
+let allQ=[], filtered=[], currentQ=0, totalQ=10, TIMER_SEC=15;
+let scoreRed=0, scoreBlue=0, ropePos=50, answered=false;
+let timer, timerLeft;
 
-let allQuestions = [], filtered = [], currentQ = 0, totalQ = 10;
-let scoreRed = 0, scoreBlue = 0;
-let ropePos = 50; // 50 = tengah, <50 = merah menang, >50 = biru menang
-let timer, timerLeft, answered = false;
-
-/* ── LOAD SOAL ── */
-async function loadQuestions() {
-  try {
-    const params = new URLSearchParams({ action: 'get', sheet: 'soal_game', public: 'true' });
-    const res = await fetch(`${API_URL}?${params}`);
-    const json = JSON.parse(await res.text());
-    if (json.success && json.data.length) {
-      allQuestions = json.data.filter(q => q.pertanyaan && q.jawaban_benar);
-      populateSubjects();
-      showStartBtn();
-    } else {
-      useFallback();
-    }
-  } catch { useFallback(); }
+async function loadQuestions(){
+  try{
+    const p=new URLSearchParams({action:'get',sheet:'soal_game',public:'true'});
+    const r=await fetch(`${API_URL}?${p}`);
+    const j=JSON.parse(await r.text());
+    if(j.success&&j.data.length){allQ=j.data.filter(q=>q.pertanyaan&&q.jawaban_benar);populate();showStart();}
+    else fallback();
+  }catch{fallback();}
 }
 
-function useFallback() {
-  allQuestions = [
+function fallback(){
+  allQ=[
     {pertanyaan:'5 × 7 = ?',pilihan_a:'30',pilihan_b:'35',pilihan_c:'32',pilihan_d:'40',jawaban_benar:'B',mata_pelajaran:'Matematika'},
     {pertanyaan:'Ibu kota Indonesia adalah?',pilihan_a:'Bandung',pilihan_b:'Surabaya',pilihan_c:'Jakarta',pilihan_d:'Medan',jawaban_benar:'C',mata_pelajaran:'IPS'},
     {pertanyaan:'Fotosintesis menghasilkan?',pilihan_a:'CO₂',pilihan_b:'O₂',pilihan_c:'N₂',pilihan_d:'H₂',jawaban_benar:'B',mata_pelajaran:'IPA'},
     {pertanyaan:'24 ÷ 6 = ?',pilihan_a:'3',pilihan_b:'5',pilihan_c:'4',pilihan_d:'6',jawaban_benar:'C',mata_pelajaran:'Matematika'},
-    {pertanyaan:'"Berlari" adalah kata kerja jenis?',pilihan_a:'Transitif',pilihan_b:'Intransitif',pilihan_c:'Pasif',pilihan_d:'Aktif',jawaban_benar:'B',mata_pelajaran:'B.Indonesia'},
     {pertanyaan:'Planet terbesar di tata surya?',pilihan_a:'Saturnus',pilihan_b:'Bumi',pilihan_c:'Jupiter',pilihan_d:'Neptunus',jawaban_benar:'C',mata_pelajaran:'IPA'},
     {pertanyaan:'12 × 8 = ?',pilihan_a:'96',pilihan_b:'86',pilihan_c:'104',pilihan_d:'90',jawaban_benar:'A',mata_pelajaran:'Matematika'},
-    {pertanyaan:'Bahasa resmi Indonesia adalah?',pilihan_a:'Jawa',pilihan_b:'Sunda',pilihan_c:'Melayu',pilihan_d:'Indonesia',jawaban_benar:'D',mata_pelajaran:'IPS'},
-    {pertanyaan:'Hewan yang berdarah dingin?',pilihan_a:'Kucing',pilihan_b:'Ular',pilihan_c:'Burung',pilihan_d:'Sapi',jawaban_benar:'B',mata_pelajaran:'IPA'},
+    {pertanyaan:'Proklamasi RI tahun?',pilihan_a:'1945',pilihan_b:'1942',pilihan_c:'1950',pilihan_d:'1948',jawaban_benar:'A',mata_pelajaran:'IPS'},
+    {pertanyaan:'Hewan berdarah dingin?',pilihan_a:'Kucing',pilihan_b:'Ular',pilihan_c:'Burung',pilihan_d:'Sapi',jawaban_benar:'B',mata_pelajaran:'IPA'},
     {pertanyaan:'100 − 37 = ?',pilihan_a:'63',pilihan_b:'67',pilihan_c:'73',pilihan_d:'53',jawaban_benar:'A',mata_pelajaran:'Matematika'},
-    {pertanyaan:'Sinonim dari "gembira" adalah?',pilihan_a:'Sedih',pilihan_b:'Marah',pilihan_c:'Bahagia',pilihan_d:'Takut',jawaban_benar:'C',mata_pelajaran:'B.Indonesia'},
-    {pertanyaan:'Proklamasi kemerdekaan RI dibacakan tahun?',pilihan_a:'1945',pilihan_b:'1942',pilihan_c:'1950',pilihan_d:'1948',jawaban_benar:'A',mata_pelajaran:'IPS'},
+    {pertanyaan:'Sinonim "gembira"?',pilihan_a:'Sedih',pilihan_b:'Marah',pilihan_c:'Bahagia',pilihan_d:'Takut',jawaban_benar:'C',mata_pelajaran:'B.Indonesia'},
   ];
-  populateSubjects();
-  showStartBtn();
+  populate();showStart();
 }
 
-function populateSubjects() {
-  const subj = [...new Set(allQuestions.map(q => q.mata_pelajaran).filter(Boolean))];
-  const sel = document.getElementById('subject-select');
-  subj.forEach(s => {
-    const o = document.createElement('option');
-    o.value = s; o.textContent = s;
-    sel.appendChild(o);
-  });
+function populate(){
+  const s=[...new Set(allQ.map(q=>q.mata_pelajaran).filter(Boolean))];
+  const sel=document.getElementById('subject-select');
+  s.forEach(x=>{const o=document.createElement('option');o.value=x;o.textContent=x;sel.appendChild(o);});
 }
 
-function showStartBtn() {
-  document.getElementById('load-status').style.display = 'none';
-  document.getElementById('start-btn').style.display = 'block';
+function showStart(){
+  document.getElementById('load-status').style.display='none';
+  document.getElementById('start-btn').style.display='block';
 }
 
-/* ── GAME FLOW ── */
-function startGame() {
-  const subj = document.getElementById('subject-select').value;
-  totalQ = parseInt(document.getElementById('count-select').value);
-  filtered = allQuestions.filter(q => subj === 'all' || q.mata_pelajaran === subj);
-  if (filtered.length < 3) { alert('Soal tidak cukup! Pilih mata pelajaran lain atau tambah soal di panel admin.'); return; }
-  filtered = shuffle(filtered).slice(0, totalQ);
-  currentQ = 0; scoreRed = 0; scoreBlue = 0; ropePos = 50;
-  updateRope(); updateScores();
+function startGame(){
+  const subj=document.getElementById('subject-select').value;
+  totalQ=parseInt(document.getElementById('count-select').value);
+  TIMER_SEC=parseInt(document.getElementById('time-select').value);
+  filtered=allQ.filter(q=>subj==='all'||q.mata_pelajaran===subj);
+  if(filtered.length<3){alert('Soal tidak cukup!');return;}
+  filtered=shuffle(filtered).slice(0,totalQ);
+  currentQ=0;scoreRed=0;scoreBlue=0;ropePos=50;
+  updateRope();updateScores();
   document.getElementById('start-screen').classList.add('hidden');
-  showQuestion();
+  showQ();
 }
 
-function showQuestion() {
-  if (currentQ >= filtered.length) { endGame(); return; }
-  const q = filtered[currentQ];
-  answered = false;
-
-  document.getElementById('q-subject').textContent = q.mata_pelajaran || 'Umum';
-  document.getElementById('q-num').textContent = `Soal ${currentQ+1}/${filtered.length}`;
-  document.getElementById('q-text').textContent = q.pertanyaan;
-  document.getElementById('q-counter').textContent = `${currentQ+1}/${filtered.length}`;
-
-  const choices = document.getElementById('choices-wrap');
-  const opts = [
-    { key:'A', text: q.pilihan_a },
-    { key:'B', text: q.pilihan_b },
-    { key:'C', text: q.pilihan_c },
-    { key:'D', text: q.pilihan_d }
-  ].filter(o => o.text);
-
-  choices.innerHTML = opts.map(o => `
-    <div class="choice-wrap">
-      <div class="choice ${o.key}" data-key="${o.key}" ontouchstart="answer('${o.key}')" onclick="answer('${o.key}')">
-        <span class="choice-hint">${o.key==='A'||o.key==='B'?'🔴 Merah':'🔵 Biru'}</span>
-        <b>${o.key}.</b> ${o.text}
-      </div>
+function showQ(){
+  if(currentQ>=filtered.length){endGame();return;}
+  const q=filtered[currentQ];
+  answered=false;
+  document.getElementById('q-tag').textContent=q.mata_pelajaran||'Umum';
+  document.getElementById('q-counter').textContent=`${currentQ+1}/${filtered.length}`;
+  document.getElementById('q-text').textContent=q.pertanyaan;
+  const opts=[
+    {k:'A',t:q.pilihan_a},{k:'B',t:q.pilihan_b},
+    {k:'C',t:q.pilihan_c},{k:'D',t:q.pilihan_d}
+  ].filter(o=>o.t);
+  // Acak urutan pilihan agar tidak ada pola posisi
+  shuffle(opts);
+  document.getElementById('choices-wrap').innerHTML=opts.map(o=>`
+    <div class="choice" data-key="${o.k}" ontouchstart="pick('${o.k}',event)" onclick="pick('${o.k}',event)">
+      <span class="key-badge">${o.k}</span>${o.t}
     </div>`).join('');
-
   startTimer();
 }
 
-function answer(chosen) {
-  if (answered) return;
-  answered = true;
-  clearInterval(timer);
-  const q = filtered[currentQ];
-  const correct = (q.jawaban_benar || '').trim().toUpperCase();
-  const isRight = chosen.toUpperCase() === correct;
-  const isRedTeam = chosen === 'A' || chosen === 'B';
+function pick(key, evt){
+  if(answered)return;
+  answered=true;clearInterval(timer);
+  const q=filtered[currentQ];
+  const correct=(q.jawaban_benar||'').trim().toUpperCase();
+  const isRight=key.toUpperCase()===correct;
+  // Deteksi sisi layar (kiri=merah, kanan=biru) dari posisi sentuhan
+  const x=evt.changedTouches?evt.changedTouches[0].clientX:evt.clientX;
+  const isRedSide=x < window.innerWidth/2;
 
-  document.querySelectorAll('.choice').forEach(el => {
-    const k = el.dataset.key;
-    if (k === correct) el.classList.add('correct');
-    else if (k === chosen) el.classList.add('wrong');
+  document.querySelectorAll('.choice').forEach(el=>{
+    if(el.dataset.key===correct)el.classList.add('correct');
+    else if(el.dataset.key===key)el.classList.add('wrong');
   });
 
-  if (isRight) {
-    if (isRedTeam) { scoreRed++; ropePos = Math.max(5, ropePos - 8); showFeedback('🔴 +1 Merah!', '#EF5350'); }
-    else            { scoreBlue++; ropePos = Math.min(95, ropePos + 8); showFeedback('🔵 +1 Biru!', '#42A5F5'); }
-  } else {
-    showFeedback('❌ Salah!', '#aaa');
-  }
-
-  updateScores(); updateRope();
-  setTimeout(() => { currentQ++; showQuestion(); }, 1800);
-}
-
-function startTimer() {
-  timerLeft = TIMER_SEC;
-  const bar = document.getElementById('timer-bar');
-  bar.style.width = '100%'; bar.style.background = '#F9A825';
-  clearInterval(timer);
-  timer = setInterval(() => {
-    timerLeft--;
-    const pct = (timerLeft / TIMER_SEC) * 100;
-    bar.style.width = pct + '%';
-    if (pct < 30) bar.style.background = '#EF5350';
-    if (timerLeft <= 0) {
-      clearInterval(timer);
-      if (!answered) { answered = true; showFeedback('⏰ Waktu habis!', '#F9A825'); setTimeout(() => { currentQ++; showQuestion(); }, 1500); }
+  if(isRight){
+    if(isRedSide){
+      scoreRed++;ropePos=Math.max(8,ropePos-10);
+      showFeedback('🔴 Benar! +1','#EF5350');
+    }else{
+      scoreBlue++;ropePos=Math.min(92,ropePos+10);
+      showFeedback('🔵 Benar! +1','#42A5F5');
     }
-  }, 1000);
-}
-
-function updateRope() {
-  const knot = document.getElementById('rope-knot');
-  const redFill = document.getElementById('rope-red');
-  const blueFill = document.getElementById('rope-blue');
-  knot.style.left = ropePos + '%';
-  redFill.style.width = ropePos + '%';
-  blueFill.style.width = (100 - ropePos) + '%';
-}
-
-function updateScores() {
-  document.getElementById('score-red').textContent = scoreRed;
-  document.getElementById('score-blue').textContent = scoreBlue;
-}
-
-function showFeedback(msg, color) {
-  const el = document.getElementById('feedback');
-  el.textContent = msg; el.style.color = color; el.style.opacity = '1';
-  setTimeout(() => el.style.opacity = '0', 1000);
-}
-
-function endGame() {
-  document.getElementById('end-screen').classList.remove('hidden');
-  document.getElementById('final-red').textContent = scoreRed;
-  document.getElementById('final-blue').textContent = scoreBlue;
-  const em = document.getElementById('win-emoji');
-  const wt = document.getElementById('win-text');
-  const ws = document.getElementById('win-sub');
-  if (scoreRed > scoreBlue) {
-    em.textContent = '🔴'; wt.style.color = '#EF5350'; wt.textContent = 'Tim Merah Menang!';
-    ws.textContent = `Tali bergeser ke merah — kerja bagus Tim Merah! 🎉`;
-  } else if (scoreBlue > scoreRed) {
-    em.textContent = '🔵'; wt.style.color = '#42A5F5'; wt.textContent = 'Tim Biru Menang!';
-    ws.textContent = `Tali bergeser ke biru — kerja bagus Tim Biru! 🎉`;
-  } else {
-    em.textContent = '🤝'; wt.style.color = '#F9A825'; wt.textContent = 'Seri!';
-    ws.textContent = 'Kedua tim sama-sama hebat!';
+    updateScores();updateRope();
+  }else{
+    showFeedback('❌ Salah!','#bbb');
   }
+  setTimeout(()=>{currentQ++;showQ();},1800);
 }
 
-function restartGame() {
-  document.getElementById('end-screen').classList.add('hidden');
-  document.getElementById('start-screen').classList.remove('hidden');
+function startTimer(){
+  timerLeft=TIMER_SEC;
+  const bar=document.getElementById('timer-bar');
+  const num=document.getElementById('timer-num');
+  bar.style.width='100%';bar.style.background='#F9A825';
+  clearInterval(timer);
+  timer=setInterval(()=>{
+    timerLeft--;num.textContent=timerLeft;
+    const p=(timerLeft/TIMER_SEC)*100;
+    bar.style.width=p+'%';
+    if(p<30)bar.style.background='#EF5350';
+    if(timerLeft<=0){
+      clearInterval(timer);
+      if(!answered){answered=true;showFeedback('⏰ Waktu habis!','#F9A825');setTimeout(()=>{currentQ++;showQ();},1500);}
+    }
+  },1000);
 }
 
-function shuffle(arr) { return [...arr].sort(() => Math.random() - .5); }
-
+function updateRope(){
+  document.getElementById('rope-knot').style.left=ropePos+'%';
+  document.getElementById('rope-red').style.width=ropePos+'%';
+  document.getElementById('rope-blue').style.width=(100-ropePos)+'%';
+}
+function updateScores(){
+  document.getElementById('score-red').textContent=scoreRed;
+  document.getElementById('score-blue').textContent=scoreBlue;
+}
+function showFeedback(msg,color){
+  const el=document.getElementById('feedback');
+  el.textContent=msg;el.style.color=color;el.style.opacity='1';
+  setTimeout(()=>el.style.opacity='0',1000);
+}
+function endGame(){
+  clearInterval(timer);
+  document.getElementById('end-screen').classList.remove('hidden');
+  document.getElementById('final-red').textContent=scoreRed;
+  document.getElementById('final-blue').textContent=scoreBlue;
+  const em=document.getElementById('win-emoji'),wt=document.getElementById('win-text'),ws=document.getElementById('win-sub');
+  if(scoreRed>scoreBlue){em.textContent='🔴🏆';wt.style.color='#EF5350';wt.textContent='Tim Merah Menang!';ws.textContent='Tali bergeser ke Merah — selamat!';}
+  else if(scoreBlue>scoreRed){em.textContent='🔵🏆';wt.style.color='#42A5F5';wt.textContent='Tim Biru Menang!';ws.textContent='Tali bergeser ke Biru — selamat!';}
+  else{em.textContent='🤝';wt.style.color='#F9A825';wt.textContent='Seri!';ws.textContent='Kedua tim sama-sama hebat!';}
+}
+function restartGame(){document.getElementById('end-screen').classList.add('hidden');document.getElementById('start-screen').classList.remove('hidden');}
+function shuffle(a){return[...a].sort(()=>Math.random()-.5);}
 loadQuestions();
 </script>
 </body>
