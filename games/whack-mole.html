@@ -11,72 +11,88 @@ body{background:#0a0e1a;display:flex;flex-direction:column;align-items:center;}
 
 .hdr{width:100%;display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:rgba(255,255,255,.05);flex-shrink:0;}
 .hdr-title{color:#fff;font-size:18px;font-weight:800;}
-.hdr-btn{background:rgba(255,255,255,.12);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:13px;cursor:pointer;}
+.hdr-btn{background:rgba(255,255,255,.1);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:13px;cursor:pointer;}
 
-.scores-bar{display:flex;width:100%;align-items:center;justify-content:space-between;padding:6px 20px;flex-shrink:0;}
-.sb{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.sb-label{font-size:clamp(11px,1.5vw,14px);color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
-.sb-val{font-size:clamp(24px,4vw,42px);font-weight:900;}
-.sb.red .sb-val{color:#EF5350;}
-.sb.blue .sb-val{color:#42A5F5;}
-.sb-streak{font-size:11px;font-weight:700;min-height:14px;}
-.sb.red .sb-streak{color:#FFAB91;}
-.sb.blue .sb-streak{color:#81D4FA;}
-.timer-center{display:flex;flex-direction:column;align-items:center;gap:4px;}
-.timer-num{font-size:clamp(28px,5vw,48px);font-weight:900;color:#F9A825;font-variant-numeric:tabular-nums;min-width:50px;text-align:center;}
-.timer-ring{width:60px;height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;}
-.timer-ring-fill{height:100%;background:#F9A825;border-radius:3px;transition:width .1s linear,background .1s;}
+/* SCORES */
+.scoreboard{width:100%;display:flex;align-items:center;justify-content:space-between;padding:6px 20px;flex-shrink:0;}
+.team-score{display:flex;flex-direction:column;align-items:center;}
+.team-name{font-size:clamp(12px,1.6vw,16px);font-weight:800;text-transform:uppercase;}
+.team-pts{font-size:clamp(22px,4vw,40px);font-weight:900;line-height:1;}
+.team-streak{font-size:11px;font-weight:700;min-height:13px;}
+.team-score.red .team-name{color:#FF7675;} .team-score.red .team-pts{color:#EF5350;} .team-score.red .team-streak{color:#FFAB91;}
+.team-score.blue .team-name{color:#74B9FF;} .team-score.blue .team-pts{color:#42A5F5;} .team-score.blue .team-streak{color:#81D4FA;}
+.mid-info{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.timer-num{font-size:clamp(22px,4vw,36px);font-weight:900;color:#F9A825;min-width:40px;text-align:center;}
+.q-badge{color:rgba(255,255,255,.4);font-size:11px;}
+
+/* TIMER */
+.timer-wrap{width:100%;max-width:900px;padding:2px 16px;flex-shrink:0;}
+.timer-bg{height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;}
+.timer-bar{height:100%;background:#F9A825;border-radius:3px;transition:width .1s linear,background .2s;}
 
 /* QUESTION */
-.q-section{width:100%;max-width:900px;padding:4px 16px;flex-shrink:0;}
-.q-box{background:rgba(255,255,255,.07);border-radius:12px;padding:12px 18px;text-align:center;}
-.q-meta{display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:6px;}
-.q-tag{background:#F9A825;color:#4a2c00;padding:2px 10px;border-radius:14px;font-size:11px;font-weight:700;}
-.q-cnt{color:rgba(255,255,255,.4);font-size:12px;}
-.q-text{color:#fff;font-size:clamp(16px,2.5vw,24px);font-weight:700;line-height:1.35;}
+.q-section{width:100%;max-width:900px;padding:3px 16px;flex-shrink:0;}
+.q-box{background:rgba(255,255,255,.07);border-radius:11px;padding:10px 16px;text-align:center;}
+.q-tag{background:#F9A825;color:#3a2000;padding:2px 10px;border-radius:11px;font-size:11px;font-weight:700;display:inline-block;margin-bottom:5px;}
+.q-text{color:#fff;font-size:clamp(15px,2.3vw,23px);font-weight:700;line-height:1.35;}
 
-/* ARENA */
-.arena{flex:1;width:100%;max-width:900px;padding:0 16px;position:relative;overflow:hidden;}
-.divider{position:absolute;left:50%;top:0;bottom:0;width:3px;background:rgba(255,255,255,.08);transform:translateX(-50%);}
-.zone-label{position:absolute;top:8px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:10px;}
-.zone-label.red{left:16px;color:#EF5350;background:rgba(239,83,80,.12);}
-.zone-label.blue{right:16px;color:#42A5F5;background:rgba(66,165,245,.12);}
-.bubble{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:800;text-align:center;padding:8px;line-height:1.2;transition:transform .08s;border:3px solid;animation:float linear infinite;}
-.bubble:active{transform:scale(.88)!important;}
-.bubble.correct-anim{animation:pop .3s forwards!important;}
-.bubble.wrong-anim{animation:shake .3s forwards!important;}
-@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
-@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(0);opacity:0}}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.hint-bar{width:100%;max-width:900px;display:flex;justify-content:space-between;padding:2px 16px;flex-shrink:0;}
+.hint{font-size:clamp(10px,1.3vw,13px);font-weight:700;padding:3px 10px;border-radius:8px;}
+.hint.red{background:rgba(239,83,80,.12);color:#FF7675;}
+.hint.blue{background:rgba(66,165,245,.12);color:#74B9FF;}
 
-/* SCREENS */
-.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;z-index:100;padding:24px;background:linear-gradient(135deg,#0a0e1a,#131b2e);}
+/* GAME AREA */
+.game-area{flex:1;width:100%;max-width:900px;padding:3px 16px;display:grid;grid-template-columns:1fr 8px 1fr;gap:0;align-items:stretch;min-height:0;}
+.divider{background:rgba(255,255,255,.12);border-radius:4px;margin:0 4px;}
+.choices-col{display:flex;flex-direction:column;gap:7px;justify-content:center;}
+.team-label{text-align:center;font-size:clamp(11px,1.4vw,14px);font-weight:800;padding:2px 0 5px;letter-spacing:.4px;}
+.team-label.red{color:#FF7675;} .team-label.blue{color:#74B9FF;}
+
+.choice{flex:1;border-radius:12px;font-size:clamp(13px,1.9vw,19px);font-weight:700;text-align:center;cursor:pointer;border:2.5px solid;display:flex;align-items:center;justify-content:center;padding:8px 10px;line-height:1.3;transition:transform .1s,box-shadow .15s;}
+.choice:active{transform:scale(.91);}
+
+/* Kiri merah, kanan biru — warna berbeda supaya jelas */
+.choices-col.left .choice{background:rgba(239,83,80,.1);border-color:rgba(239,83,80,.38);color:#FFCDD2;}
+.choices-col.left .choice:hover{background:rgba(239,83,80,.2);border-color:#EF5350;}
+.choices-col.right .choice{background:rgba(66,165,245,.1);border-color:rgba(66,165,245,.38);color:#BBDEFB;}
+.choices-col.right .choice:hover{background:rgba(66,165,245,.2);border-color:#42A5F5;}
+
+/* Tepuk benar — efek meledak */
+.choice.correct{background:rgba(76,175,80,.35)!important;border-color:#4CAF50!important;color:#A5D6A7!important;transform:scale(1.06);box-shadow:0 0 0 6px rgba(76,175,80,.25);}
+.choice.wrong{background:rgba(244,67,54,.18)!important;border-color:#EF5350!important;opacity:.42;}
+
+.kb{display:inline-block;background:rgba(255,255,255,.15);border-radius:5px;padding:1px 6px;font-size:11px;margin-right:5px;font-weight:900;flex-shrink:0;}
+
+/* Flash overlay saat benar */
+.flash{position:fixed;inset:0;pointer-events:none;z-index:150;opacity:0;transition:opacity .1s;}
+
+.feedback{position:fixed;top:35%;left:50%;transform:translate(-50%,-50%);font-size:clamp(26px,5vw,56px);font-weight:900;pointer-events:none;z-index:200;opacity:0;transition:opacity .15s;text-align:center;white-space:nowrap;}
+
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;z-index:100;padding:24px;background:linear-gradient(135deg,#0a0e1a,#121c30);}
 .screen.hidden{display:none;}
-.screen h2{font-size:clamp(24px,5vw,48px);font-weight:900;color:#fff;text-align:center;}
-.screen p{font-size:clamp(13px,2vw,17px);color:rgba(255,255,255,.7);text-align:center;max-width:460px;}
-.big-btn{padding:14px 40px;border-radius:14px;font-size:clamp(15px,2.2vw,20px);font-weight:800;border:none;cursor:pointer;}
-.big-btn.green{background:#4CAF50;color:#fff;}
-.big-btn.yellow{background:#F9A825;color:#4a2c00;}
-.sel-wrap{display:flex;flex-direction:column;gap:8px;width:100%;max-width:360px;}
+.screen h2{font-size:clamp(22px,5vw,42px);font-weight:900;color:#fff;text-align:center;}
+.screen p{font-size:clamp(13px,1.8vw,16px);color:rgba(255,255,255,.7);text-align:center;max-width:480px;line-height:1.6;}
+.big-btn{padding:13px 34px;border-radius:12px;font-size:clamp(14px,2vw,18px);font-weight:800;border:none;cursor:pointer;}
+.btn-green{background:#4CAF50;color:#fff;} .btn-yellow{background:#F9A825;color:#3a2000;}
+.sel-wrap{display:flex;flex-direction:column;gap:7px;width:100%;max-width:360px;}
 .sel-wrap label{color:rgba(255,255,255,.7);font-size:13px;}
-.sel-wrap select{padding:9px 12px;border-radius:10px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-size:15px;outline:none;}
+.sel-wrap select{padding:9px 12px;border-radius:10px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-size:14px;outline:none;}
 .result-row{display:flex;gap:24px;align-items:center;}
-.rr{text-align:center;}
-.rr-v{font-size:clamp(28px,5vw,52px);font-weight:900;}
-.rr-l{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:3px;}
-.rr.red .rr-v{color:#EF5350;} .rr.red .rr-l{color:#EF9A9A;}
-.rr.blue .rr-v{color:#42A5F5;} .rr.blue .rr-l{color:#90CAF9;}
+.rb{text-align:center;}
+.rb-v{font-size:clamp(28px,5vw,48px);font-weight:900;}
+.rb-l{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:3px;}
+.rb.red .rb-v{color:#EF5350;}.rb.red .rb-l{color:#FF7675;}
+.rb.blue .rb-v{color:#42A5F5;}.rb.blue .rb-l{color:#74B9FF;}
 .vs-sep{color:rgba(255,255,255,.3);font-size:20px;font-weight:900;}
-.feedback{position:fixed;top:35%;left:50%;transform:translate(-50%,-50%);font-size:clamp(24px,5vw,56px);font-weight:900;pointer-events:none;z-index:300;opacity:0;transition:opacity .15s;text-align:center;}
 </style>
 </head>
 <body>
 
 <!-- START -->
 <div class="screen" id="start-screen">
-  <div style="font-size:60px">🎯</div>
+  <div style="font-size:56px">🎯</div>
   <h2>Tepuk Jawaban!</h2>
-  <p>Gelembung jawaban akan melayang. Tim Merah (sisi kiri) dan Tim Biru (sisi kanan) — tepuk gelembung dengan jawaban yang BENAR!</p>
+  <p>Pilihan tampil di <strong style="color:#EF5350">kiri (Tim Merah)</strong> dan <strong style="color:#42A5F5">kanan (Tim Biru)</strong> — isinya sama! Siapa lebih cepat tepuk jawaban benar dapat poin dan soal langsung lanjut!</p>
   <div class="sel-wrap">
     <label>Mata Pelajaran</label>
     <select id="subject-select"><option value="all">Semua</option></select>
@@ -89,53 +105,64 @@ body{background:#0a0e1a;display:flex;flex-direction:column;align-items:center;}
     <label style="margin-top:6px">Waktu per Soal</label>
     <select id="time-select">
       <option value="10">10 detik (cepat)</option>
-      <option value="15" selected>15 detik (normal)</option>
+      <option value="15" selected>15 detik</option>
       <option value="20">20 detik (santai)</option>
     </select>
   </div>
   <div id="load-status" style="color:rgba(255,255,255,.5);font-size:14px">Memuat soal...</div>
-  <button class="big-btn green" id="start-btn" onclick="startGame()" style="display:none">▶ Mulai!</button>
-  <button class="hdr-btn" onclick="location.href='index.html'" style="background:rgba(255,255,255,.1);margin-top:4px">← Kembali</button>
+  <button class="big-btn btn-green" id="start-btn" onclick="startGame()" style="display:none">▶ Mulai!</button>
+  <button class="hdr-btn" onclick="location.href='index.html'" style="margin-top:4px">← Kembali</button>
 </div>
 
 <!-- GAME -->
 <div class="hdr">
   <div class="hdr-title">🎯 Tepuk Jawaban</div>
-  <button class="hdr-btn" onclick="if(confirm('Keluar?'))location.href='index.html'">✕ Keluar</button>
+  <button class="hdr-btn" onclick="if(confirm('Keluar?'))location.href='index.html'">✕</button>
 </div>
 
-<div class="scores-bar">
-  <div class="sb red">
-    <div class="sb-label">🔴 Merah</div>
-    <div class="sb-val" id="score-red">0</div>
-    <div class="sb-streak" id="streak-red"></div>
+<div class="scoreboard">
+  <div class="team-score red">
+    <div class="team-name">🔴 Tim Merah</div>
+    <div class="team-pts" id="score-red">0</div>
+    <div class="team-streak" id="streak-red"></div>
   </div>
-  <div class="timer-center">
+  <div class="mid-info">
     <div class="timer-num" id="timer-num">15</div>
-    <div class="timer-ring"><div class="timer-ring-fill" id="timer-ring-fill"></div></div>
-    <div style="color:rgba(255,255,255,.4);font-size:10px;margin-top:2px" id="q-counter">1/10</div>
+    <div class="q-badge" id="q-counter">1/10</div>
   </div>
-  <div class="sb blue">
-    <div class="sb-label">🔵 Biru</div>
-    <div class="sb-val" id="score-blue">0</div>
-    <div class="sb-streak" id="streak-blue"></div>
+  <div class="team-score blue">
+    <div class="team-name">Tim Biru 🔵</div>
+    <div class="team-pts" id="score-blue">0</div>
+    <div class="team-streak" id="streak-blue"></div>
   </div>
+</div>
+
+<div class="timer-wrap">
+  <div class="timer-bg"><div class="timer-bar" id="timer-bar"></div></div>
 </div>
 
 <div class="q-section">
   <div class="q-box">
-    <div class="q-meta">
-      <span class="q-tag" id="q-tag">IPA</span>
-      <span class="q-cnt" id="q-cnt">Soal 1</span>
-    </div>
+    <div class="q-tag" id="q-tag">IPA</div>
     <div class="q-text" id="q-text">Memuat soal...</div>
   </div>
 </div>
 
-<div class="arena" id="arena">
+<div class="hint-bar">
+  <div class="hint red">🔴 Tim Merah — tepuk kiri</div>
+  <div class="hint blue">Tim Biru — tepuk kanan 🔵</div>
+</div>
+
+<div class="game-area">
+  <div>
+    <div class="team-label red">🔴 TIM MERAH</div>
+    <div class="choices-col left" id="choices-left"></div>
+  </div>
   <div class="divider"></div>
-  <div class="zone-label red">Tim Merah</div>
-  <div class="zone-label blue">Tim Biru</div>
+  <div>
+    <div class="team-label blue">TIM BIRU 🔵</div>
+    <div class="choices-col right" id="choices-right"></div>
+  </div>
 </div>
 
 <!-- END -->
@@ -144,65 +171,55 @@ body{background:#0a0e1a;display:flex;flex-direction:column;align-items:center;}
   <h2 id="win-text"></h2>
   <p id="win-sub"></p>
   <div class="result-row">
-    <div class="rr red"><div class="rr-v" id="final-red">0</div><div class="rr-l">Tim Merah</div></div>
+    <div class="rb red"><div class="rb-v" id="final-red">0</div><div class="rb-l">Tim Merah</div></div>
     <div class="vs-sep">VS</div>
-    <div class="rr blue"><div class="rr-v" id="final-blue">0</div><div class="rr-l">Tim Biru</div></div>
+    <div class="rb blue"><div class="rb-v" id="final-blue">0</div><div class="rb-l">Tim Biru</div></div>
   </div>
   <div style="display:flex;gap:12px;margin-top:8px">
-    <button class="big-btn green" onclick="restartGame()">🔄 Main Lagi</button>
-    <button class="big-btn yellow" onclick="location.href='index.html'">🏠 Menu</button>
+    <button class="big-btn btn-green" onclick="restartGame()">🔄 Main Lagi</button>
+    <button class="big-btn btn-yellow" onclick="location.href='index.html'">🏠 Menu</button>
   </div>
 </div>
 
 <div class="feedback" id="feedback"></div>
+<div class="flash" id="flash"></div>
 
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbw62t9g-ZgCt-yT26lUsXId_jFwwvunxr8vHlYzSmzCj9mkdEl0puOWfsZpcYtG1Mjx/exec';
+const API_URL='https://script.google.com/macros/s/AKfycbw62t9g-ZgCt-yT26lUsXId_jFwwvunxr8vHlYzSmzCj9mkdEl0puOWfsZpcYtG1Mjx/exec';
+let allQ=[],filtered=[],currentQ=0,totalQ=10,TIMER_SEC=15;
+let scoreRed=0,scoreBlue=0,streakRed=0,streakBlue=0,answered=false;
+let timer,timerLeft;
 
-let allQ=[], filtered=[], currentQ=0, totalQ=10, TIMER_SEC=15;
-let scoreRed=0, scoreBlue=0, streakRed=0, streakBlue=0;
-let timer, timerLeft, answered=false;
-let bubbles=[];
-
-const COLORS_RED  = [{bg:'rgba(239,83,80,.25)',border:'#EF5350',text:'#FFCDD2'},{bg:'rgba(183,28,28,.3)',border:'#C62828',text:'#FFCDD2'},{bg:'rgba(255,138,101,.2)',border:'#FF8A65',text:'#FFCCBC'}];
-const COLORS_BLUE = [{bg:'rgba(66,165,245,.25)',border:'#42A5F5',text:'#BBDEFB'},{bg:'rgba(21,101,192,.3)',border:'#1565C0',text:'#BBDEFB'},{bg:'rgba(100,181,246,.2)',border:'#64B5F6',text:'#E3F2FD'}];
-
-async function loadQuestions() {
-  try {
-    const params=new URLSearchParams({action:'get',sheet:'soal_game',public:'true'});
-    const res=await fetch(`${API_URL}?${params}`);
-    const json=JSON.parse(await res.text());
-    if(json.success&&json.data.length){allQ=json.data.filter(q=>q.pertanyaan&&q.jawaban_benar);populateSubjects();showStart();}
-    else useFallback();
-  } catch{useFallback();}
+async function loadQuestions(){
+  try{
+    const p=new URLSearchParams({action:'get',sheet:'soal_game',public:'true'});
+    const r=await fetch(`${API_URL}?${p}`);
+    const j=JSON.parse(await r.text());
+    if(j.success&&j.data.length){allQ=j.data.filter(q=>q.pertanyaan&&q.jawaban_benar);populate();showStart();}
+    else fallback();
+  }catch{fallback();}
 }
-
-function useFallback(){
+function fallback(){
   allQ=[
-    {pertanyaan:'Berapa hasil 6 × 8?',pilihan_a:'42',pilihan_b:'48',pilihan_c:'54',pilihan_d:'36',jawaban_benar:'B',mata_pelajaran:'Matematika'},
-    {pertanyaan:'Apa nama proses daun hijau membuat makanan?',pilihan_a:'Respirasi',pilihan_b:'Transpirasi',pilihan_c:'Fotosintesis',pilihan_d:'Fermentasi',jawaban_benar:'C',mata_pelajaran:'IPA'},
+    {pertanyaan:'6 × 8 = ?',pilihan_a:'42',pilihan_b:'48',pilihan_c:'54',pilihan_d:'36',jawaban_benar:'B',mata_pelajaran:'Matematika'},
+    {pertanyaan:'Proses daun membuat makanan?',pilihan_a:'Respirasi',pilihan_b:'Transpirasi',pilihan_c:'Fotosintesis',pilihan_d:'Fermentasi',jawaban_benar:'C',mata_pelajaran:'IPA'},
     {pertanyaan:'Sungai terpanjang di Indonesia?',pilihan_a:'Citarum',pilihan_b:'Bengawan Solo',pilihan_c:'Kapuas',pilihan_d:'Musi',jawaban_benar:'C',mata_pelajaran:'IPS'},
     {pertanyaan:'15² = ?',pilihan_a:'225',pilihan_b:'180',pilihan_c:'200',pilihan_d:'256',jawaban_benar:'A',mata_pelajaran:'Matematika'},
-    {pertanyaan:'Antonim dari kata "rajin"?',pilihan_a:'Cerdas',pilihan_b:'Malas',pilihan_c:'Pintar',pilihan_d:'Jujur',jawaban_benar:'B',mata_pelajaran:'B.Indonesia'},
-    {pertanyaan:'Planet yang paling dekat dengan matahari?',pilihan_a:'Venus',pilihan_b:'Bumi',pilihan_c:'Merkurius',pilihan_d:'Mars',jawaban_benar:'C',mata_pelajaran:'IPA'},
+    {pertanyaan:'Antonim "rajin"?',pilihan_a:'Cerdas',pilihan_b:'Malas',pilihan_c:'Pintar',pilihan_d:'Jujur',jawaban_benar:'B',mata_pelajaran:'B.Indonesia'},
+    {pertanyaan:'Planet terdekat matahari?',pilihan_a:'Venus',pilihan_b:'Bumi',pilihan_c:'Merkurius',pilihan_d:'Mars',jawaban_benar:'C',mata_pelajaran:'IPA'},
     {pertanyaan:'1000 − 375 = ?',pilihan_a:'635',pilihan_b:'615',pilihan_c:'625',pilihan_d:'645',jawaban_benar:'C',mata_pelajaran:'Matematika'},
-    {pertanyaan:'Benua terluas di dunia?',pilihan_a:'Afrika',pilihan_b:'Amerika',pilihan_c:'Eropa',pilihan_d:'Asia',jawaban_benar:'D',mata_pelajaran:'IPS'},
-    {pertanyaan:'Hewan yang mengalami metamorfosis sempurna?',pilihan_a:'Belalang',pilihan_b:'Kecoa',pilihan_c:'Kupu-kupu',pilihan_d:'Jangkrik',jawaban_benar:'C',mata_pelajaran:'IPA'},
+    {pertanyaan:'Benua terluas?',pilihan_a:'Afrika',pilihan_b:'Amerika',pilihan_c:'Eropa',pilihan_d:'Asia',jawaban_benar:'D',mata_pelajaran:'IPS'},
+    {pertanyaan:'Metamorfosis sempurna?',pilihan_a:'Belalang',pilihan_b:'Kecoa',pilihan_c:'Kupu-kupu',pilihan_d:'Jangkrik',jawaban_benar:'C',mata_pelajaran:'IPA'},
     {pertanyaan:'√81 = ?',pilihan_a:'7',pilihan_b:'8',pilihan_c:'9',pilihan_d:'10',jawaban_benar:'C',mata_pelajaran:'Matematika'},
   ];
-  populateSubjects();showStart();
+  populate();showStart();
 }
-
-function populateSubjects(){
-  const subj=[...new Set(allQ.map(q=>q.mata_pelajaran).filter(Boolean))];
+function populate(){
+  const s=[...new Set(allQ.map(q=>q.mata_pelajaran).filter(Boolean))];
   const sel=document.getElementById('subject-select');
-  subj.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;sel.appendChild(o);});
+  s.forEach(x=>{const o=document.createElement('option');o.value=x;o.textContent=x;sel.appendChild(o);});
 }
-
-function showStart(){
-  document.getElementById('load-status').style.display='none';
-  document.getElementById('start-btn').style.display='block';
-}
+function showStart(){document.getElementById('load-status').style.display='none';document.getElementById('start-btn').style.display='block';}
 
 function startGame(){
   const subj=document.getElementById('subject-select').value;
@@ -221,158 +238,102 @@ function showQ(){
   if(currentQ>=filtered.length){endGame();return;}
   const q=filtered[currentQ];
   answered=false;
-  clearBubbles();
-
   document.getElementById('q-tag').textContent=q.mata_pelajaran||'Umum';
-  document.getElementById('q-cnt').textContent=`Soal ${currentQ+1}`;
   document.getElementById('q-counter').textContent=`${currentQ+1}/${filtered.length}`;
   document.getElementById('q-text').textContent=q.pertanyaan;
-
   const opts=[
-    {k:'A',t:q.pilihan_a,correct:q.jawaban_benar.trim().toUpperCase()==='A'},
-    {k:'B',t:q.pilihan_b,correct:q.jawaban_benar.trim().toUpperCase()==='B'},
-    {k:'C',t:q.pilihan_c,correct:q.jawaban_benar.trim().toUpperCase()==='C'},
-    {k:'D',t:q.pilihan_d,correct:q.jawaban_benar.trim().toUpperCase()==='D'},
+    {k:'A',t:q.pilihan_a},{k:'B',t:q.pilihan_b},
+    {k:'C',t:q.pilihan_c},{k:'D',t:q.pilihan_d}
   ].filter(o=>o.t);
-
-  // Spawn bubbles setelah sedikit delay agar soal terbaca dulu
-  setTimeout(()=>spawnBubbles(opts),300);
+  const makeHTML=(side)=>opts.map(o=>`
+    <div class="choice" data-key="${o.k}" data-side="${side}"
+      ontouchstart="pick('${o.k}','${side}',event)"
+      onclick="pick('${o.k}','${side}',event)">
+      <span class="kb">${o.k}</span>${o.t}
+    </div>`).join('');
+  document.getElementById('choices-left').innerHTML=makeHTML('red');
+  document.getElementById('choices-right').innerHTML=makeHTML('blue');
   startTimer();
 }
 
-function spawnBubbles(opts){
-  const arena=document.getElementById('arena');
-  const W=arena.clientWidth, H=arena.clientHeight;
-  const half=W/2;
-  const minSize=Math.max(80, Math.min(120, W*0.12));
-  const maxSize=Math.max(100, Math.min(150, W*0.15));
-
-  opts.forEach((opt,i)=>{
-    const size=minSize+Math.random()*(maxSize-minSize);
-    const isLeft=i<2; // A,B di kiri (merah), C,D di kanan (biru)
-    const palette=isLeft?COLORS_RED:COLORS_BLUE;
-    const col=palette[i%palette.length];
-
-    // Posisi acak di zona masing-masing
-    const xMin=isLeft?4:half+4;
-    const xMax=isLeft?half-size-4:W-size-4;
-    const x=xMin+Math.random()*(xMax-xMin);
-    const y=40+Math.random()*(H-size-60);
-    const duration=(3+Math.random()*2).toFixed(1);
-    const delay=(Math.random()*1).toFixed(1);
-
-    const el=document.createElement('div');
-    el.className='bubble';
-    el.dataset.correct=opt.correct;
-    el.dataset.key=opt.k;
-    el.style.cssText=`
-      left:${x}px;top:${y}px;width:${size}px;height:${size}px;
-      font-size:${Math.max(13,size*0.13)}px;
-      background:${col.bg};border-color:${col.border};color:${col.text};
-      animation-duration:${duration}s;animation-delay:-${delay}s;
-    `;
-    el.innerHTML=`<div style="pointer-events:none"><div style="font-size:${Math.max(11,size*0.1)}px;opacity:.7;margin-bottom:2px">${opt.k}</div>${opt.t}</div>`;
-    el.ontouchstart=(e)=>{e.preventDefault();tapBubble(el,opt.correct,isLeft);};
-    el.onclick=()=>tapBubble(el,opt.correct,isLeft);
-    arena.appendChild(el);
-    bubbles.push(el);
-  });
-}
-
-function tapBubble(el,isCorrect,isRedTeam){
+function pick(key,side,evt){
   if(answered)return;
-  answered=true;
-  clearInterval(timer);
+  evt.stopPropagation();
+  answered=true;clearInterval(timer);
+  const q=filtered[currentQ];
+  const correct=(q.jawaban_benar||'').trim().toUpperCase();
+  const isRight=key.toUpperCase()===correct;
 
-  if(isCorrect){
-    el.classList.add('correct-anim');
-    el.style.borderColor='#4CAF50';
-    el.style.background='rgba(76,175,80,.4)';
-    if(isRedTeam){
+  ['choices-left','choices-right'].forEach(id=>{
+    document.querySelectorAll(`#${id} .choice`).forEach(el=>{
+      if(el.dataset.key===correct)el.classList.add('correct');
+      else if(el.dataset.key===key&&el.dataset.side===side)el.classList.add('wrong');
+    });
+  });
+
+  if(isRight){
+    if(side==='red'){
       scoreRed++;streakRed++;streakBlue=0;
-      showFeedback(`🔴 Tepat! +${streakRed>1?streakRed+'x🔥':1}`,'#EF5350');
-    } else {
+      flashScreen('rgba(239,83,80,.18)');
+      showFeedback(`🔴 Tepat!${streakRed>1?' 🔥'+streakRed+'x':''}`,`#EF5350`);
+    }else{
       scoreBlue++;streakBlue++;streakRed=0;
-      showFeedback(`🔵 Tepat! +${streakBlue>1?streakBlue+'x🔥':1}`,'#42A5F5');
+      flashScreen('rgba(66,165,245,.18)');
+      showFeedback(`🔵 Tepat!${streakBlue>1?' 🔥'+streakBlue+'x':''}`,`#42A5F5`);
     }
     updateScores();
-  } else {
-    el.classList.add('wrong-anim');
-    showFeedback('❌ Salah!','#aaa');
+    // Lanjut lebih cepat saat benar (1.1 detik)
+    setTimeout(()=>{currentQ++;showQ();},1100);
+  }else{
     streakRed=0;streakBlue=0;
-    // Kasih petunjuk: highlight jawaban benar
-    bubbles.forEach(b=>{
-      if(b.dataset.correct==='true'){
-        b.style.borderColor='#4CAF50';
-        b.style.background='rgba(76,175,80,.3)';
-      }
-    });
+    showFeedback('❌ Salah!','#bbb');
+    setTimeout(()=>{currentQ++;showQ();},1600);
   }
-  setTimeout(()=>{currentQ++;showQ();},1800);
 }
 
 function startTimer(){
   timerLeft=TIMER_SEC;
-  const num=document.getElementById('timer-num');
-  const fill=document.getElementById('timer-ring-fill');
-  num.textContent=timerLeft;fill.style.width='100%';fill.style.background='#F9A825';
+  const bar=document.getElementById('timer-bar'),num=document.getElementById('timer-num');
+  bar.style.width='100%';bar.style.background='#F9A825';num.style.color='#F9A825';
   clearInterval(timer);
   timer=setInterval(()=>{
-    timerLeft--;
-    num.textContent=timerLeft;
-    const pct=(timerLeft/TIMER_SEC)*100;
-    fill.style.width=pct+'%';
-    if(pct<30){fill.style.background='#EF5350';num.style.color='#EF5350';}
-    else num.style.color='#F9A825';
-    if(timerLeft<=0){
-      clearInterval(timer);
-      if(!answered){
-        answered=true;
-        // Tunjukkan jawaban benar
-        bubbles.forEach(b=>{
-          if(b.dataset.correct==='true'){b.style.borderColor='#4CAF50';b.style.background='rgba(76,175,80,.3)';}
-        });
-        streakRed=0;streakBlue=0;
-        showFeedback('⏰ Waktu habis!','#F9A825');
-        setTimeout(()=>{currentQ++;showQ();},1600);
-      }
-    }
+    timerLeft--;num.textContent=timerLeft;
+    const p=(timerLeft/TIMER_SEC)*100;
+    bar.style.width=p+'%';
+    if(p<30){bar.style.background='#EF5350';num.style.color='#EF5350';}
+    if(timerLeft<=0){clearInterval(timer);if(!answered){answered=true;
+      streakRed=0;streakBlue=0;
+      const q=filtered[currentQ],correct=(q.jawaban_benar||'').trim().toUpperCase();
+      ['choices-left','choices-right'].forEach(id=>{document.querySelectorAll(`#${id} .choice`).forEach(el=>{if(el.dataset.key===correct)el.classList.add('correct');});});
+      showFeedback('⏰ Waktu habis!','#F9A825');
+      setTimeout(()=>{currentQ++;showQ();},1500);}}
   },1000);
+}
+
+function flashScreen(color){
+  const fl=document.getElementById('flash');
+  fl.style.background=color;fl.style.opacity='1';
+  setTimeout(()=>fl.style.opacity='0',180);
 }
 
 function updateScores(){
   document.getElementById('score-red').textContent=scoreRed;
   document.getElementById('score-blue').textContent=scoreBlue;
-  document.getElementById('streak-red').textContent=streakRed>1?`🔥 ${streakRed}x beruntun!`:'';
-  document.getElementById('streak-blue').textContent=streakBlue>1?`🔥 ${streakBlue}x beruntun!`:'';
+  document.getElementById('streak-red').textContent=streakRed>1?`🔥 ${streakRed}x beruntun`:'';
+  document.getElementById('streak-blue').textContent=streakBlue>1?`🔥 ${streakBlue}x beruntun`:'';
 }
-
-function showFeedback(msg,color){
-  const el=document.getElementById('feedback');
-  el.textContent=msg;el.style.color=color;el.style.opacity='1';
-  setTimeout(()=>el.style.opacity='0',900);
-}
-
-function clearBubbles(){
-  bubbles.forEach(b=>b.remove());
-  bubbles=[];
-}
-
+function showFeedback(msg,color){const el=document.getElementById('feedback');el.textContent=msg;el.style.color=color;el.style.opacity='1';setTimeout(()=>el.style.opacity='0',900);}
 function endGame(){
-  clearInterval(timer);clearBubbles();
+  clearInterval(timer);
   document.getElementById('end-screen').classList.remove('hidden');
-  document.getElementById('final-red').textContent=scoreRed;
-  document.getElementById('final-blue').textContent=scoreBlue;
-  const em=document.getElementById('win-emoji');
-  const wt=document.getElementById('win-text');
-  const ws=document.getElementById('win-sub');
+  document.getElementById('final-red').textContent=scoreRed;document.getElementById('final-blue').textContent=scoreBlue;
+  const em=document.getElementById('win-emoji'),wt=document.getElementById('win-text'),ws=document.getElementById('win-sub');
   if(scoreRed>scoreBlue){em.textContent='🔴🏆';wt.style.color='#EF5350';wt.textContent='Tim Merah Menang!';ws.textContent='Jari Tim Merah lebih cepat dan tepat!';}
   else if(scoreBlue>scoreRed){em.textContent='🔵🏆';wt.style.color='#42A5F5';wt.textContent='Tim Biru Menang!';ws.textContent='Jari Tim Biru lebih cepat dan tepat!';}
   else{em.textContent='🤝';wt.style.color='#F9A825';wt.textContent='Seri!';ws.textContent='Kedua tim sama-sama jago!';}
 }
-
 function restartGame(){document.getElementById('end-screen').classList.add('hidden');document.getElementById('start-screen').classList.remove('hidden');}
-function shuffle(arr){return[...arr].sort(()=>Math.random()-.5);}
+function shuffle(a){return[...a].sort(()=>Math.random()-.5);}
 loadQuestions();
 </script>
 </body>
